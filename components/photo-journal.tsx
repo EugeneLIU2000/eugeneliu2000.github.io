@@ -34,7 +34,7 @@ export function PhotoJournal({ photos }: { photos: JournalPhoto[] }) {
             Photos coming soon
           </EmptyTitle>
           <EmptyDescription>
-            A place for my photographs and moments from everyday life.
+            Personal photographs will be added here.
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
@@ -80,7 +80,7 @@ export function PhotoJournal({ photos }: { photos: JournalPhoto[] }) {
               <DialogTitle>{photo.caption}</DialogTitle>
               <DialogDescription>
                 {[photo.location, photo.date].filter(Boolean).join(' · ') ||
-                  'From my photo journal.'}
+                  'Personal photograph.'}
               </DialogDescription>
             </div>
           </DialogContent>

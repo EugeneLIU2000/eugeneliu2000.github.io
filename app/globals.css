@@ -934,3 +934,55 @@ h1 {
     gap: 25px;
   }
 }
+
+/* Plain academic presentation. */
+.intro h1 {
+  font-size: 56px;
+  margin-top: 0;
+}
+.intro {
+  padding-block: 66px;
+}
+.intro .bio {
+  font-size: 17px;
+}
+.section-heading h2 {
+  margin-top: 0;
+  font-size: 30px;
+}
+.research-intro {
+  justify-content: flex-end;
+  margin-top: -9px;
+  margin-bottom: 20px;
+}
+.europe-card h3 {
+  font-size: 27px;
+}
+.country-grid h4 {
+  margin-top: 0;
+}
+@media (max-width: 650px) {
+  .intro h1 {
+    font-size: 45px;
+  }
+  .intro {
+    padding-block: 40px;
+  }
+  .intro .bio {
+    font-size: 16px;
+  }
+  .section-heading h2 {
+    font-size: 27px;
+  }
+  .research-intro {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0;
+  }
+  .research-intro > .text-link {
+    margin: 0;
+  }
+  .country-grid > div {
+    display: block;
+  }
+}

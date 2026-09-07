@@ -11,26 +11,10 @@ const publications = [...publicationData.publications].sort((a, b) =>
   ),
 );
 
-function SectionHeading({
-  eyebrow,
-  title,
-  index,
-  id,
-}: {
-  eyebrow: string;
-  title: string;
-  index: string;
-  id: string;
-}) {
+function SectionHeading({ title, id }: { title: string; id: string }) {
   return (
     <div className="section-heading">
-      <div>
-        <p className="eyebrow">{eyebrow}</p>
-        <h2 id={id}>{title}</h2>
-      </div>
-      <span className="section-index" aria-hidden="true">
-        {index} /
-      </span>
+      <h2 id={id}>{title}</h2>
     </div>
   );
 }
@@ -47,15 +31,15 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#about">About</a>
-          <a href="#research">Research</a>
-          <a href="#journey">CV & journey</a>
-          <a href="#life">Life</a>
+          <a href="#research">Publications</a>
+          <a href="#journey">CV</a>
+          <a href="#life">Photos</a>
         </nav>
         <a
           className="header-contact"
           href="mailto:yingjian@lorentz.leidenuniv.nl"
         >
-          Say hello <ArrowUpRight size={16} />
+          Email <ArrowUpRight size={16} />
         </a>
       </header>
       <main id="main">
@@ -65,33 +49,27 @@ export default function Home() {
           aria-labelledby="intro-title"
         >
           <div className="intro-copy">
-            <p className="eyebrow">
-              <span className="status-dot" aria-hidden="true" /> Theoretical
-              physics · Leiden University
-            </p>
-            <h1 id="intro-title">
-              Yingjian Liu<span className="accent">.</span>
-            </h1>
-            <p className="intro-role">PhD candidate in theoretical physics</p>
-            <p className="intro-lead">
-              I study how quantum computers can help us understand and simulate
-              quantum systems.
+            <h1 id="intro-title">Yingjian Liu</h1>
+            <p className="intro-role">
+              PhD candidate in theoretical physics · Leiden University
             </p>
             <p className="bio">
-              I’m part of the{' '}
+              I am a PhD candidate in the{' '}
               <a href="https://aqa.liacs.nl/">
                 Applied Quantum Algorithms group
               </a>{' '}
-              at Leiden University, working with{' '}
+              at Leiden University, supervised by{' '}
               <a href="https://jtura.cat/">Jordi Tura</a> and{' '}
-              <a href="https://stefanopolla.com/">Stefano Polla</a>. My research
-              focuses on quantum simulation and algorithms for fault-tolerant
-              quantum computers, which use error correction to protect their
-              calculations.
+              <a href="https://stefanopolla.com/">Stefano Polla</a>.
+            </p>
+            <p className="bio">
+              My research focuses on quantum simulation, quantum algorithms, and
+              quantum information, with an emphasis on fault-tolerant quantum
+              computing.
             </p>
             <div className="intro-links">
               <a className="button-link" href="#research">
-                Explore my research <ArrowDown size={16} />
+                Publications <ArrowDown size={16} />
               </a>
               <a className="text-link" href={scholar}>
                 Google Scholar <ArrowUpRight size={16} />
@@ -118,12 +96,7 @@ export default function Home() {
           id="updates"
           aria-labelledby="updates-title"
         >
-          <SectionHeading
-            eyebrow="From the desk"
-            title="Recent updates"
-            index="01"
-            id="updates-title"
-          />
+          <SectionHeading title="News" id="updates-title" />
           {updates.map((update) => (
             <div className="news-row" key={update.text}>
               <time dateTime={update.date}>{update.label}</time>
@@ -151,16 +124,10 @@ export default function Home() {
           aria-labelledby="research-title"
         >
           <SectionHeading
-            eyebrow="Questions & contributions"
-            title="Publications & preprints"
-            index="02"
+            title="Publications and preprints"
             id="research-title"
           />
           <div className="research-intro">
-            <p className="section-intro">
-              My work spans quantum algorithms, quantum simulation, and quantum
-              information. Here are the papers behind those questions.
-            </p>
             <a className="text-link" href={scholar}>
               Google Scholar <ArrowUpRight size={16} />
             </a>
@@ -242,34 +209,29 @@ export default function Home() {
           aria-labelledby="journey-title"
         >
           <SectionHeading
-            eyebrow="An academic journey"
-            title="Across borders, into physics."
-            index="03"
+            title="Education and research experience"
             id="journey-title"
           />
           <div className="europe-card">
             <p className="eyebrow">
               Erasmus Mundus Europhotonics · Sep 2021–Oct 2023
             </p>
-            <h3>One master’s. Three countries.</h3>
+            <h3>Master of Science in Optics</h3>
             <p>
-              My master’s in optics brought me to universities in France,
-              Germany, and Spain, supported by an Erasmus Mundus Joint Master
-              Degree scholarship.
+              Joint master’s programme at universities in France, Germany, and
+              Spain. Supported by an Erasmus Mundus Joint Master Degree
+              scholarship.
             </p>
             <div className="country-grid">
               <div>
-                <span>01</span>
                 <h4>France</h4>
                 <p>Aix-Marseille University</p>
               </div>
               <div>
-                <span>02</span>
                 <h4>Germany</h4>
                 <p>Karlsruhe Institute of Technology</p>
               </div>
               <div>
-                <span>03</span>
                 <h4>Spain</h4>
                 <p>Universitat Politècnica de Catalunya</p>
               </div>
@@ -286,7 +248,7 @@ export default function Home() {
           </div>
           <div className="cv-columns">
             <div className="experience">
-              <h3 className="subsection-title">Education & experience</h3>
+              <h3 className="subsection-title">Positions and degrees</h3>
               <div className="cv-entry">
                 <p className="cv-date">Nov 2024–present · The Netherlands</p>
                 <h4>PhD candidate · Theoretical physics</h4>
@@ -347,24 +309,19 @@ export default function Home() {
           id="life"
           aria-labelledby="life-title"
         >
-          <SectionHeading
-            eyebrow="Beyond the equations"
-            title="A photo journal."
-            index="04"
-            id="life-title"
-          />
+          <SectionHeading title="Photos" id="life-title" />
           <PhotoJournal photos={photos as JournalPhoto[]} />
         </section>
       </main>
       <footer className="site-footer section-width">
         <div>
           <a className="footer-name" href="#about">
-            Yingjian Liu<span className="accent">.</span>
+            Yingjian Liu
           </a>
           <p>Theoretical physics · Leiden University</p>
         </div>
         <a className="text-link" href="mailto:yingjian@lorentz.leidenuniv.nl">
-          <Mail size={17} /> Get in touch <ArrowUpRight size={16} />
+          <Mail size={17} /> Email <ArrowUpRight size={16} />
         </a>
         <div className="copyright">
           <p>© 2026 Yingjian Liu</p>
