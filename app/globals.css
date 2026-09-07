@@ -986,3 +986,437 @@ h1 {
     display: block;
   }
 }
+.personal-note {
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+/* Full publication wall: small holds, one continuous climbing route. */
+.academic-intro.intro {
+  display: block;
+  padding-block: 45px 40px;
+}
+.academic-intro .intro-copy {
+  max-width: 780px;
+}
+.academic-intro h1 {
+  font-size: 47px;
+  margin-bottom: 12px;
+}
+.academic-intro .bio {
+  max-width: 760px;
+  font-size: 16px;
+  margin-top: 15px;
+}
+.academic-intro .intro-links {
+  gap: 22px;
+  margin-top: 22px;
+}
+.academic-intro .personal-note {
+  margin-top: 17px;
+}
+.climb-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -7px 0 12px;
+}
+.climb-toolbar > p {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.hold-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.hold-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.hold-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.legend-color {
+  background: #cb2885;
+}
+.legend-gray {
+  background: #bdc2be;
+}
+.climb-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 40px;
+  align-items: start;
+}
+.climbing-canvas {
+  position: relative;
+  aspect-ratio: 0.8;
+  min-height: 700px;
+  isolation: isolate;
+}
+.rock-sprite {
+  background-image: url('/artwork/quantum-holds.png');
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  display: block;
+  aspect-ratio: 1;
+}
+.future-hold {
+  position: absolute;
+  width: 38px;
+  opacity: 0.25;
+  filter: grayscale(1);
+  pointer-events: none;
+  z-index: 0;
+}
+.paper-hold {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  transform: translate(-50%, -50%);
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  color: var(--foreground);
+  z-index: 2;
+}
+.paper-hold > .rock-sprite {
+  width: 100%;
+  transition: transform 0.18s;
+}
+.paper-hold:hover > .rock-sprite,
+.paper-hold:focus-visible > .rock-sprite {
+  transform: scale(1.12) rotate(-5deg);
+}
+.paper-hold:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 5px;
+}
+.paper-hold[aria-pressed='true'] {
+  background: #bd483210;
+  box-shadow: 0 0 0 1px #b6442c35;
+}
+.paper-hold-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-align: left;
+}
+.paper-hold-label small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.paper-hold-left .paper-hold-label {
+  right: calc(100% + 9px);
+  text-align: right;
+}
+.paper-hold-right .paper-hold-label {
+  left: calc(100% + 9px);
+}
+.paper-hold[aria-pressed='true'] .paper-hold-label {
+  color: var(--primary);
+}
+.route-climber {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -8%);
+  pointer-events: none;
+  z-index: 3;
+  transition:
+    left 0.42s ease-in-out,
+    top 0.42s ease-in-out;
+}
+.route-climber > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url('/artwork/climbing-poses.png') var(--pose) 0 / 400% 100%
+    no-repeat;
+}
+.selected-publication {
+  position: sticky;
+  top: 35px;
+  margin-top: 150px;
+  border-top: 2px solid var(--foreground);
+  padding-top: 20px;
+}
+.selected-topic {
+  font-size: 12px;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+.selected-publication h3 {
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+}
+.selected-publication .paper-summary {
+  margin-top: 15px;
+  font-size: 15px;
+}
+.selected-publication .authors {
+  margin-top: 19px;
+  font-size: 13px;
+}
+.selected-venue {
+  margin-top: 16px;
+  color: var(--primary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.selected-dates {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin-top: 12px;
+}
+.selected-publication .paper-links {
+  margin-top: 20px;
+}
+.publication-list-alternative {
+  margin-top: 25px;
+  border-top: 1px solid var(--border);
+}
+.publication-list-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 18px 0;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--foreground);
+}
+.publication-list-toggle svg {
+  transition: transform 0.2s;
+}
+.publication-list-toggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+@media (max-width: 1000px) {
+  .climb-layout {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 24px;
+  }
+  .climbing-canvas {
+    min-height: 680px;
+  }
+  .paper-hold {
+    width: 60px;
+    height: 60px;
+  }
+  .paper-hold-label {
+    font-size: 12px;
+  }
+  .route-climber {
+    width: 125px;
+    height: 125px;
+  }
+  .selected-publication h3 {
+    font-size: 23px;
+  }
+}
+@media (max-width: 780px) {
+  .climb-layout {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .climbing-canvas {
+    aspect-ratio: 0.86;
+    min-height: 640px;
+    max-width: 630px;
+    width: 100%;
+    margin: auto;
+  }
+  .paper-hold {
+    width: 65px;
+    height: 65px;
+  }
+  .paper-hold-label {
+    font-size: 14px;
+  }
+  .selected-publication {
+    position: static;
+    margin-top: 0;
+    padding: 23px;
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  .selected-publication h3 {
+    font-size: 24px;
+  }
+  .route-climber {
+    width: 140px;
+    height: 140px;
+  }
+  .climb-toolbar {
+    align-items: flex-start;
+  }
+  .hold-legend {
+    gap: 12px;
+  }
+  .academic-intro h1 {
+    font-size: 42px;
+  }
+}
+@media (max-width: 480px) {
+  .climbing-canvas {
+    min-height: 620px;
+    aspect-ratio: auto;
+  }
+  .paper-hold {
+    width: 56px;
+    height: 56px;
+  }
+  .paper-hold-label {
+    font-size: 12px;
+    max-width: 92px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+  .paper-hold-label small {
+    margin-top: 3px;
+  }
+  .paper-hold-left .paper-hold-label {
+    right: calc(100% + 3px);
+  }
+  .paper-hold-right .paper-hold-label {
+    left: calc(100% + 3px);
+  }
+  .future-hold {
+    width: 29px;
+  }
+  .route-climber {
+    width: 113px;
+    height: 113px;
+  }
+  .climb-toolbar {
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 10px;
+  }
+  .selected-publication {
+    padding: 21px 18px;
+  }
+  .academic-intro.intro {
+    padding-block: 35px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-climber,
+  .paper-hold > .rock-sprite {
+    transition: none;
+  }
+}
+@media print {
+  .publication-climb {
+    display: none;
+  }
+  .publication-list-alternative [data-slot='collapsible-content'] {
+    display: block !important;
+    height: auto !important;
+  }
+}
+.route-climber {
+  height: 250px;
+  width: 125px;
+  transform: translate(-50%, -23%);
+}
+@media (max-width: 1000px) {
+  .route-climber {
+    width: 108px;
+    height: 216px;
+  }
+}
+@media (max-width: 780px) {
+  .route-climber {
+    width: 120px;
+    height: 240px;
+  }
+}
+@media (max-width: 480px) {
+  .route-climber {
+    width: 92px;
+    height: 184px;
+  }
+}
+.climbing-canvas {
+  --climber-size: 125px;
+}
+.route-climber {
+  width: var(--climber-size);
+  height: calc(var(--climber-size) * 2);
+  transform: translate(
+    calc(var(--grip-x) * -100%),
+    calc(var(--grip-y) * -100%)
+  );
+}
+.support-hold {
+  position: absolute;
+  width: 23px;
+  transform: translate(-50%, -50%);
+  filter: grayscale(1);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.paper-hold-label {
+  background: var(--background);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+.paper-hold-right .paper-hold-label {
+  left: calc(50% + var(--climber-size) * 0.7);
+}
+.selected-paper-jump {
+  display: none;
+}
+#selected-publication {
+  scroll-margin-top: 24px;
+}
+@media (max-width: 1000px) {
+  .climbing-canvas {
+    --climber-size: 108px;
+  }
+}
+@media (max-width: 780px) {
+  .climbing-canvas {
+    --climber-size: 120px;
+  }
+  .selected-paper-jump {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    margin: 0 0 15px;
+  }
+}
+@media (max-width: 480px) {
+  .climbing-canvas {
+    --climber-size: 92px;
+  }
+  .support-hold {
+    width: 19px;
+  }
+  .paper-hold-right .paper-hold-label {
+    width: 70px;
+  }
+}

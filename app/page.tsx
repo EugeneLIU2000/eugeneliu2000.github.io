@@ -1,4 +1,6 @@
-import { ArrowUpRight, ArrowDown, MapPin, Mail } from 'lucide-react';
+import { ArrowUpRight, Mail } from 'lucide-react';
+import { BoulderingResearch } from '@/components/bouldering-research';
+import { PublicationList } from '@/components/publication-list';
 import { PhotoJournal, type JournalPhoto } from '@/components/photo-journal';
 import publicationData from '@/content/publications.json';
 import updates from '@/content/updates.json';
@@ -44,7 +46,7 @@ export default function Home() {
       </header>
       <main id="main">
         <section
-          className="intro section-width"
+          className="intro academic-intro section-width"
           id="about"
           aria-labelledby="intro-title"
         >
@@ -68,28 +70,113 @@ export default function Home() {
               computing.
             </p>
             <div className="intro-links">
-              <a className="button-link" href="#research">
-                Publications <ArrowDown size={16} />
-              </a>
               <a className="text-link" href={scholar}>
-                Google Scholar <ArrowUpRight size={16} />
+                Google Scholar <ArrowUpRight size={15} />
+              </a>
+              <a
+                className="text-link"
+                href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu"
+              >
+                University profile <ArrowUpRight size={15} />
+              </a>
+              <a
+                className="text-link"
+                href="mailto:yingjian@lorentz.leidenuniv.nl"
+              >
+                Email <ArrowUpRight size={15} />
               </a>
             </div>
-          </div>
-          <aside className="profile-note">
-            <div className="profile-initials" aria-hidden="true">
-              YL
-            </div>
-            <p>
-              <MapPin size={15} aria-hidden="true" /> Leiden, the Netherlands
+            <p className="personal-note">
+              Outside research, I enjoy bouldering.
             </p>
-            <a href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu">
-              Leiden University profile <ArrowUpRight size={14} />
-            </a>
-            <a href="mailto:yingjian@lorentz.leidenuniv.nl">
-              yingjian@lorentz.leidenuniv.nl <ArrowUpRight size={14} />
-            </a>
-          </aside>
+          </div>
+        </section>
+        <section
+          className="research section-width"
+          id="research"
+          aria-labelledby="research-title"
+        >
+          <SectionHeading
+            title="Publications and preprints"
+            id="research-title"
+          />
+          <BoulderingResearch />
+          <PublicationList count={publications.length}>
+            <ol className="publication-list">
+              {publications.map((paper, index) => (
+                <li
+                  id={`paper-${paper.arxiv}`}
+                  className={`publication ${index === 0 ? 'publication-featured' : ''}`}
+                  key={paper.arxiv}
+                >
+                  <div className="publication-year">
+                    {(paper.publicationDate || paper.firstSubmitted).slice(
+                      0,
+                      4,
+                    )}
+                    <span aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <article>
+                    <div className="publication-meta">
+                      <span className={paper.doi ? 'venue' : 'preprint-label'}>
+                        {paper.venue ===
+                        '2026 ACM/IEEE 53rd Annual International Symposium on Computer Architecture (ISCA)'
+                          ? 'International Symposium on Computer Architecture (ISCA)'
+                          : paper.venue || 'arXiv preprint'}
+                        {paper.volume ? ` ${paper.volume}` : ''}
+                        {paper.articleNumber ? `, ${paper.articleNumber}` : ''}
+                        {paper.pages ? `, pp. ${paper.pages}` : ''}
+                      </span>
+                      {index === 0 && paper.status === 'Preprint' && (
+                        <span className="latest-label">Latest preprint</span>
+                      )}
+                    </div>
+                    <h3>
+                      <a
+                        href={
+                          paper.doi
+                            ? `https://doi.org/${paper.doi}`
+                            : paper.arxivUrl
+                        }
+                      >
+                        {paper.title}
+                      </a>
+                    </h3>
+                    <p className="authors">
+                      {paper.authors.map((author, i) => (
+                        <span key={author}>
+                          {i > 0 ? ', ' : ''}
+                          {author === 'Yingjian Liu' ? (
+                            <strong>{author}</strong>
+                          ) : (
+                            author
+                          )}
+                        </span>
+                      ))}
+                    </p>
+                    <p className="paper-summary">{paper.topic}</p>
+                    <div className="paper-links">
+                      <a href={paper.arxivUrl}>
+                        arXiv <ArrowUpRight size={13} />
+                      </a>
+                      {paper.doi && (
+                        <a href={`https://doi.org/${paper.doi}`}>
+                          Published paper <ArrowUpRight size={13} />
+                        </a>
+                      )}
+                      {paper.codeUrl && (
+                        <a href={paper.codeUrl}>
+                          Code <ArrowUpRight size={13} />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ol>
+          </PublicationList>
         </section>
         <section
           className="updates section-width"
@@ -117,91 +204,6 @@ export default function Home() {
               </span>
             </div>
           ))}
-        </section>
-        <section
-          className="research section-width"
-          id="research"
-          aria-labelledby="research-title"
-        >
-          <SectionHeading
-            title="Publications and preprints"
-            id="research-title"
-          />
-          <div className="research-intro">
-            <a className="text-link" href={scholar}>
-              Google Scholar <ArrowUpRight size={16} />
-            </a>
-          </div>
-          <ol className="publication-list">
-            {publications.map((paper, index) => (
-              <li
-                className={`publication ${index === 0 ? 'publication-featured' : ''}`}
-                key={paper.arxiv}
-              >
-                <div className="publication-year">
-                  {(paper.publicationDate || paper.firstSubmitted).slice(0, 4)}
-                  <span aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <article>
-                  <div className="publication-meta">
-                    <span className={paper.doi ? 'venue' : 'preprint-label'}>
-                      {paper.venue ===
-                      '2026 ACM/IEEE 53rd Annual International Symposium on Computer Architecture (ISCA)'
-                        ? 'International Symposium on Computer Architecture (ISCA)'
-                        : paper.venue || 'arXiv preprint'}
-                      {paper.volume ? ` ${paper.volume}` : ''}
-                      {paper.articleNumber ? `, ${paper.articleNumber}` : ''}
-                      {paper.pages ? `, pp. ${paper.pages}` : ''}
-                    </span>
-                    {index === 0 && paper.status === 'Preprint' && (
-                      <span className="latest-label">Latest preprint</span>
-                    )}
-                  </div>
-                  <h3>
-                    <a
-                      href={
-                        paper.doi
-                          ? `https://doi.org/${paper.doi}`
-                          : paper.arxivUrl
-                      }
-                    >
-                      {paper.title}
-                    </a>
-                  </h3>
-                  <p className="authors">
-                    {paper.authors.map((author, i) => (
-                      <span key={author}>
-                        {i > 0 ? ', ' : ''}
-                        {author === 'Yingjian Liu' ? (
-                          <strong>{author}</strong>
-                        ) : (
-                          author
-                        )}
-                      </span>
-                    ))}
-                  </p>
-                  <p className="paper-summary">{paper.topic}</p>
-                  <div className="paper-links">
-                    <a href={paper.arxivUrl}>
-                      arXiv <ArrowUpRight size={13} />
-                    </a>
-                    {paper.doi && (
-                      <a href={`https://doi.org/${paper.doi}`}>
-                        Published paper <ArrowUpRight size={13} />
-                      </a>
-                    )}
-                    {paper.codeUrl && (
-                      <a href={paper.codeUrl}>
-                        Code <ArrowUpRight size={13} />
-                      </a>
-                    )}
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ol>
         </section>
         <section
           className="journey section-width"
