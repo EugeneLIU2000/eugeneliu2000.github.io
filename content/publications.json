@@ -1,0 +1,199 @@
+{
+  "verifiedAt": "2026-09-08",
+  "scope": "Eight quantum works verified through arXiv and primary institutional/publisher sources. Google Scholar could not be fetched (403).",
+  "publications": [
+    {
+      "title": "Graph Theoretic Approach to Quantum Nonstabilizerness",
+      "authors": [
+        "Yingjian Liu",
+        "Albert Gasull",
+        "Mengyao Hu",
+        "Ruiyun Zhang",
+        "Flavio Baccari",
+        "Jordi Tura"
+      ],
+      "arxiv": "2607.26154",
+      "arxivUrl": "https://arxiv.org/abs/2607.26154",
+      "firstSubmitted": "2026-07-28",
+      "status": "Preprint",
+      "topic": "Uses graph structure to certify quantum “magic”, a resource needed for universal quantum computation.",
+      "sources": [
+        "https://arxiv.org/abs/2607.26154",
+        "https://jtura.cat/index.php?page=main"
+      ]
+    },
+    {
+      "title": "Unifying Qubit Routing Across Diverse Quantum ISAs via Canonical Representation",
+      "previousTitle": "Qubit Mapping and Routing tailored to Advanced Quantum ISAs: Not as Costly as You Think",
+      "authors": [
+        "Zhaohui Yang",
+        "Kai Zhang",
+        "Xinyang Tian",
+        "Xiangyu Ren",
+        "Yingjian Liu",
+        "Yunfeng Li",
+        "Dawei Ding",
+        "Jianxin Chen",
+        "Yuan Xie"
+      ],
+      "arxiv": "2511.04608",
+      "arxivUrl": "https://arxiv.org/abs/2511.04608",
+      "firstSubmitted": "2025-11-06",
+      "latestRevision": "2026-08-06",
+      "status": "Conference paper",
+      "venue": "2026 ACM/IEEE 53rd Annual International Symposium on Computer Architecture (ISCA)",
+      "pages": "2302–2317",
+      "publicationDate": "2026-06",
+      "publicationDatePrecision": "month",
+      "doi": "10.1109/ISCA66397.2026.00162",
+      "codeUrl": "https://github.com/Youngcius/canopus",
+      "topic": "Routes qubits using the gates available on each device to reduce the extra operations needed to execute quantum circuits.",
+      "notes": "Latest arXiv authors supersede v1's Yuanx Xie typo and earlier Ding/Chen order. Leiden affiliation verified in full-text HTML. Conference dates June 27–July 1 are not the precise publication date.",
+      "sources": [
+        "https://arxiv.org/abs/2511.04608",
+        "https://arxiv.org/html/2511.04608v1",
+        "https://researchportal.hkust.edu.hk/en/publications/unifying-qubit-routing-across-diverse-quantum-isas-via-canonical-/"
+      ]
+    },
+    {
+      "title": "Optimizer-dependent generalization bound for quantum neural networks",
+      "authors": ["Chenghong Zhu", "Hongshun Yao", "Yingjian Liu", "Xin Wang"],
+      "arxiv": "2501.16228",
+      "arxivUrl": "https://arxiv.org/abs/2501.16228",
+      "firstSubmitted": "2025-01-27",
+      "status": "Journal article",
+      "venue": "Quantum Machine Intelligence",
+      "volume": "7",
+      "articleNumber": "92",
+      "publicationDate": "2025-09-29",
+      "doi": "10.1007/s42484-025-00318-9",
+      "codeUrl": "https://github.com/chenghongz/QML_generalization",
+      "topic": "Shows how training choices and circuit design influence how well quantum neural networks perform on new data.",
+      "sources": [
+        "https://arxiv.org/abs/2501.16228",
+        "https://link.springer.com/article/10.1007/s42484-025-00318-9"
+      ]
+    },
+    {
+      "title": "Sample-efficient estimation of nonlinear quantum state functions",
+      "previousTitle": "Nonlinear functions of quantum states",
+      "authors": ["Hongshun Yao", "Yingjian Liu", "Tengxiang Lin", "Xin Wang"],
+      "arxiv": "2412.01696",
+      "arxivUrl": "https://arxiv.org/abs/2412.01696",
+      "firstSubmitted": "2024-12-02",
+      "status": "Journal article; advance online publication",
+      "venue": "Communications Physics",
+      "publicationDate": "2026-06-06",
+      "doi": "10.1038/s42005-026-02710-8",
+      "codeUrl": "https://github.com/tengxianglin/QSF",
+      "topic": "Estimates properties such as entropy and similarity directly from copies of quantum states without reconstructing the full state.",
+      "notes": "Publisher currently provides an unedited accepted manuscript with permanent DOI; no volume/article number verified. Do not call this only a preprint or invent a final article number.",
+      "sources": [
+        "https://arxiv.org/abs/2412.01696",
+        "https://www.nature.com/articles/s42005-026-02710-8"
+      ]
+    },
+    {
+      "title": "Hypothesis testing of symmetry in quantum dynamics",
+      "authors": [
+        "Yu-Ao Chen",
+        "Chenghong Zhu",
+        "Keming He",
+        "Yingjian Liu",
+        "Xin Wang"
+      ],
+      "arxiv": "2411.14292",
+      "arxivUrl": "https://arxiv.org/abs/2411.14292",
+      "firstSubmitted": "2024-11-21",
+      "status": "Journal article",
+      "venue": "Physical Review A",
+      "volume": "111",
+      "articleNumber": "052406",
+      "publicationDate": "2025-05-05",
+      "doi": "10.1103/PhysRevA.111.052406",
+      "topic": "Develops efficient tests for detecting symmetries in an unknown quantum evolution using only a limited number of applications.",
+      "sources": [
+        "https://arxiv.org/abs/2411.14292",
+        "https://journals.aps.org/pra/abstract/10.1103/PhysRevA.111.052406"
+      ]
+    },
+    {
+      "title": "Quantum algorithms for inverse participation ratio estimation in multiqubit and multiqudit systems",
+      "arxivTitle": "Quantum Algorithms for Inverse Participation Ratio Estimation in multi-qubit and multi-qudit systems",
+      "authors": [
+        "Yingjian Liu",
+        "Piotr Sierant",
+        "Paolo Stornati",
+        "Maciej Lewenstein",
+        "Marcin Płodzień"
+      ],
+      "arxiv": "2405.03338",
+      "arxivUrl": "https://arxiv.org/abs/2405.03338",
+      "firstSubmitted": "2024-05-06",
+      "status": "Journal article",
+      "venue": "Physical Review A",
+      "volume": "111",
+      "articleNumber": "052614",
+      "publicationDate": "2025-05-16",
+      "doi": "10.1103/PhysRevA.111.052614",
+      "topic": "Introduces quantum algorithms that measure how broadly a quantum state is spread across a chosen basis.",
+      "sources": [
+        "https://arxiv.org/abs/2405.03338",
+        "https://journals.aps.org/pra/abstract/10.1103/PhysRevA.111.052614"
+      ]
+    },
+    {
+      "title": "Quantum Algorithm for Reversing Unknown Unitary Evolutions",
+      "previousTitle": "Quantum advantage in reversing unknown unitary evolutions",
+      "authors": [
+        "Yu-Ao Chen",
+        "Yin Mo",
+        "Yingjian Liu",
+        "Lei Zhang",
+        "Xin Wang"
+      ],
+      "arxiv": "2403.04704",
+      "arxivUrl": "https://arxiv.org/abs/2403.04704",
+      "firstSubmitted": "2024-03-07",
+      "latestRevision": "2025-10-09",
+      "status": "Preprint",
+      "topic": "Constructs an exact quantum algorithm that reverses an unknown unitary evolution without first learning its full description.",
+      "sources": [
+        "https://arxiv.org/abs/2403.04704",
+        "https://www.quair.group/publication/"
+      ]
+    },
+    {
+      "title": "Parameterized quantum comb and simpler circuits for reversing unknown qubit-unitary operations",
+      "authors": [
+        "Yin Mo",
+        "Lei Zhang",
+        "Yu-Ao Chen",
+        "Yingjian Liu",
+        "Tengxiang Lin",
+        "Xin Wang"
+      ],
+      "arxiv": "2403.03761",
+      "arxivUrl": "https://arxiv.org/abs/2403.03761",
+      "firstSubmitted": "2024-03-06",
+      "status": "Journal article",
+      "venue": "npj Quantum Information",
+      "volume": "11",
+      "articleNumber": "32",
+      "publicationDate": "2025-02-24",
+      "doi": "10.1038/s41534-025-00979-1",
+      "codeUrl": "https://github.com/QuAIR/PQComb-codes",
+      "topic": "Uses trainable quantum circuits to design simpler protocols that reverse unknown quantum operations with fewer auxiliary qubits.",
+      "sources": [
+        "https://arxiv.org/abs/2403.03761",
+        "https://www.nature.com/articles/s41534-025-00979-1"
+      ]
+    }
+  ],
+  "identityNotes": [
+    "Leiden official staff profile verifies theoretical physics PhD candidate, Tura Group, and email yingjian@lorentz.leidenuniv.nl: https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu",
+    "Jordi Tura group page verifies since November 2024, co-supervision with Stefano Polla: https://jtura.cat/index.php?page=group",
+    "Former lab page says November 2023–October 2024 research assistant, while user-provided bio reportedly says December 2023; preserve user's direct statement if using December: https://www.quair.group/author/yingjian-liu/",
+    "Exclude same-name works on Lyapunov exponents, emotion recognition, finite elements, medicine and EEG. No verified quantum works earlier than March 2024 found."
+  ]
+}
