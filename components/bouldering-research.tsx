@@ -1,7 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, X } from 'lucide-react';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverTitle,
+} from '@/components/ui/popover';
 import publicationData from '@/content/publications.json';
 
 // Oldest preprints start at the bottom; later work extends the route upward.
@@ -12,55 +18,48 @@ const route = [
     sprite: 7,
     x: 40,
     y: 86,
-    side: 'left',
   },
   {
     id: '2403.04704',
     label: 'Inverse evolution',
     sprite: 6,
-    x: 57,
+    x: 60,
     y: 77,
-    side: 'right',
   },
   {
     id: '2405.03338',
     label: 'State localization',
     sprite: 5,
-    x: 39,
+    x: 37,
     y: 68,
-    side: 'left',
   },
   {
     id: '2411.14292',
     label: 'Symmetry tests',
     sprite: 4,
-    x: 57,
+    x: 60,
     y: 59,
-    side: 'right',
   },
   {
     id: '2412.01696',
     label: 'State properties',
     sprite: 2,
-    x: 38,
+    x: 36,
     y: 50,
-    side: 'left',
   },
   {
     id: '2501.16228',
     label: 'Quantum learning',
     sprite: 3,
-    x: 56,
+    x: 58,
     y: 41,
-    side: 'right',
   },
   {
     id: '2511.04608',
     label: 'Qubit routing',
     sprite: 1,
-    x: 38,
+    x: 36,
     y: 32,
-    side: 'left',
   },
   {
     id: '2607.26154',
@@ -68,7 +67,6 @@ const route = [
     sprite: 0,
     x: 55,
     y: 23,
-    side: 'right',
   },
 ].map((hold) => {
   const paper = publicationData.publications.find(
@@ -105,80 +103,33 @@ const futureHolds = [
   [48, 90, 6, 12],
 ];
 
-// Normalized contact positions in each generated frame, measured from its cell.
-const gripPoints = [
-  [0.284, 0.345],
-  [0.72, 0.137],
-  [0.255, 0.257],
-  [0.265, 0.221],
-];
-const footPoints = [
-  [0.68, 0.829],
-  [0.76, 0.655],
-  [0.728, 0.62],
+// Contact positions in the fourth illustration frame, relative to its cell.
+const grip = [0.265, 0.221];
+const supports = [
   [0.767, 0.81],
-];
-const otherHandPoints = [
-  [0.733, 0.433],
-  [0.19, 0.322],
-  [0.715, 0.264],
   [0.777, 0.398],
-];
-const otherFootPoints = [
-  [0.28, 0.805],
-  [0.354, 0.846],
-  [0.35, 0.858],
   [0.3, 0.751],
 ];
+const highestHold = route.reduce((highest, hold) =>
+  hold.y < highest.y ? hold : highest,
+);
 
 function spritePosition(sprite: number) {
   return `${((sprite % 4) * 100) / 3}% ${Math.floor(sprite / 4) * 100}%`;
 }
 
 export function BoulderingResearch() {
-  const [selectedId, setSelectedId] = useState('2607.26154');
-  const [climberStep, setClimberStep] = useState(route.length - 1);
-  const targetStep = route.findIndex((hold) => hold.id === selectedId);
-  const selected = route[targetStep];
-  const current = route[climberStep];
-  const moving = climberStep !== targetStep;
-
-  useEffect(() => {
-    if (!moving) return;
-    // Reading the paper is immediate; the optional illustration follows separately.
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-    const timer = window.setTimeout(
-      () => {
-        setClimberStep((step) =>
-          reducedMotion ? targetStep : step + Math.sign(targetStep - step),
-        );
-      },
-      reducedMotion ? 0 : 430,
-    );
-    return () => window.clearTimeout(timer);
-  }, [moving, targetStep, climberStep]);
+  const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <div className="publication-climb">
       <div className="climb-toolbar">
-        <p>Select a colored hold to view a paper.</p>
-        <div className="hold-legend">
-          <span>
-            <i className="legend-color" />
-            Papers
-          </span>
-          <span>
-            <i className="legend-gray" />
-            Space for future papers
-          </span>
-        </div>
+        <p>Hover or tap a colored hold to view a paper.</p>
+        <span className="future-note">
+          <i /> Space for future papers
+        </span>
       </div>
-      <a className="selected-paper-jump" href="#selected-publication">
-        View selected paper ↓
-      </a>
-      <div className="climb-layout">
+      <div className="wall-surface">
         <div
           className="climbing-canvas"
           aria-label="Climbing route through eight papers"
@@ -196,107 +147,130 @@ export function BoulderingResearch() {
               }}
             />
           ))}
-          {route.flatMap((hold, index) =>
-            [footPoints, otherHandPoints, otherFootPoints].map(
-              (contacts, contact) => (
-                <span
-                  key={`support-${hold.id}-${contact}`}
-                  aria-hidden="true"
-                  className="support-hold rock-sprite"
-                  style={{
-                    left: `calc(${hold.x}% + ${contacts[index % 4][0] - gripPoints[index % 4][0]} * var(--climber-size))`,
-                    top: `calc(${hold.y}% + ${(contacts[index % 4][1] - gripPoints[index % 4][1]) * 2} * var(--climber-size))`,
-                    backgroundPosition: spritePosition((index + 4) % 8),
-                  }}
-                />
-              ),
-            ),
-          )}
+          {supports.map(([x, y], index) => (
+            <span
+              key={index}
+              aria-hidden="true"
+              className="support-hold rock-sprite"
+              style={{
+                left: `calc(${highestHold.x}% + ${x - grip[0]} * var(--climber-size))`,
+                top: `calc(${highestHold.y}% + ${(y - grip[1]) * 2} * var(--climber-size))`,
+                backgroundPosition: spritePosition(index + 4),
+              }}
+            />
+          ))}
           {route.map((hold) => (
-            <button
+            <Popover
               key={hold.id}
-              type="button"
-              className={`paper-hold paper-hold-${hold.side}`}
-              style={{ left: `${hold.x}%`, top: `${hold.y}%` }}
-              onClick={() => setSelectedId(hold.id)}
-              aria-pressed={selectedId === hold.id}
-              aria-controls="selected-publication"
-              aria-label={`${hold.label}: ${hold.paper.title}`}
+              open={openId === hold.id}
+              onOpenChange={(open) =>
+                setOpenId((current) =>
+                  open ? hold.id : current === hold.id ? null : current,
+                )
+              }
             >
-              <span
-                className="rock-sprite"
-                aria-hidden="true"
-                style={{ backgroundPosition: spritePosition(hold.sprite) }}
-              />
-              <span className="paper-hold-label">
-                {hold.label}
-                <small>arXiv {hold.paper.firstSubmitted.slice(0, 4)}</small>
-              </span>
-            </button>
+              <PopoverTrigger
+                id={`hold-${hold.id}`}
+                className="paper-hold"
+                style={{ left: `${hold.x}%`, top: `${hold.y}%` }}
+                openOnHover
+                delay={130}
+                closeDelay={220}
+                aria-label={hold.paper.title}
+              >
+                <span
+                  className="rock-sprite"
+                  aria-hidden="true"
+                  style={{ backgroundPosition: spritePosition(hold.sprite) }}
+                />
+              </PopoverTrigger>
+              <PopoverContent
+                className="paper-preview"
+                side="bottom"
+                align="center"
+                sideOffset={10}
+                initialFocus={(type) => type === 'keyboard'}
+                data-paper={hold.id}
+              >
+                <div className="paper-preview-topline">
+                  <p>
+                    {hold.paper.status === 'Preprint'
+                      ? 'Preprint'
+                      : 'Publication'}{' '}
+                    ·{' '}
+                    {(
+                      hold.paper.publicationDate || hold.paper.firstSubmitted
+                    ).slice(0, 4)}
+                  </p>
+                  <button
+                    className="preview-close"
+                    type="button"
+                    aria-label="Close paper details"
+                    onClick={() => setOpenId(null)}
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+                <PopoverTitle className="paper-preview-title">
+                  <a
+                    href={
+                      hold.paper.doi
+                        ? `https://doi.org/${hold.paper.doi}`
+                        : hold.paper.arxivUrl
+                    }
+                  >
+                    {hold.paper.title}
+                  </a>
+                </PopoverTitle>
+                <p className="authors">
+                  {hold.paper.authors.map((author, i) => (
+                    <span key={author}>
+                      {i > 0 ? ', ' : ''}
+                      {author === 'Yingjian Liu' ? (
+                        <strong>{author}</strong>
+                      ) : (
+                        author
+                      )}
+                    </span>
+                  ))}
+                </p>
+                <p className="paper-preview-venue">
+                  {hold.paper.venue ===
+                  '2026 ACM/IEEE 53rd Annual International Symposium on Computer Architecture (ISCA)'
+                    ? 'International Symposium on Computer Architecture (ISCA)'
+                    : hold.paper.venue || 'arXiv preprint'}
+                  {hold.paper.volume ? ` ${hold.paper.volume}` : ''}
+                  {hold.paper.articleNumber
+                    ? `, ${hold.paper.articleNumber}`
+                    : ''}
+                  {hold.paper.pages ? `, pp. ${hold.paper.pages}` : ''}
+                </p>
+                <div className="paper-links">
+                  <a href={hold.paper.arxivUrl}>
+                    arXiv <ArrowUpRight size={14} />
+                  </a>
+                  {hold.paper.doi && (
+                    <a href={`https://doi.org/${hold.paper.doi}`}>
+                      Published paper <ArrowUpRight size={14} />
+                    </a>
+                  )}
+                  {hold.paper.codeUrl && (
+                    <a href={hold.paper.codeUrl}>
+                      Code <ArrowUpRight size={14} />
+                    </a>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
           ))}
           <div
-            className={`route-climber ${moving ? 'is-climbing' : ''}`}
+            className="route-climber"
             aria-hidden="true"
-            style={
-              {
-                left: `${current.x}%`,
-                top: `${current.y}%`,
-                '--pose': `${((climberStep % 4) * 100) / 3}%`,
-                '--grip-x': gripPoints[climberStep % 4][0],
-                '--grip-y': gripPoints[climberStep % 4][1],
-              } as React.CSSProperties
-            }
+            style={{ left: `${highestHold.x}%`, top: `${highestHold.y}%` }}
           >
             <span />
           </div>
         </div>
-        <article
-          className="selected-publication"
-          id="selected-publication"
-          aria-live="polite"
-          aria-labelledby="selected-paper-title"
-        >
-          <p className="selected-topic">{selected.label}</p>
-          <h3 id="selected-paper-title">{selected.paper.title}</h3>
-          <p className="paper-summary">{selected.paper.topic}</p>
-          <p className="authors">
-            {selected.paper.authors.map((author, i) => (
-              <span key={author}>
-                {i > 0 ? ', ' : ''}
-                {author === 'Yingjian Liu' ? <strong>{author}</strong> : author}
-              </span>
-            ))}
-          </p>
-          <p className="selected-venue">
-            {selected.paper.venue || 'arXiv preprint'}
-            {selected.paper.volume ? ` ${selected.paper.volume}` : ''}
-            {selected.paper.articleNumber
-              ? `, ${selected.paper.articleNumber}`
-              : ''}
-            {selected.paper.pages ? `, pp. ${selected.paper.pages}` : ''}
-          </p>
-          <div className="selected-dates">
-            <span>arXiv: {selected.paper.firstSubmitted}</span>
-            {selected.paper.publicationDate && (
-              <span>Published: {selected.paper.publicationDate}</span>
-            )}
-          </div>
-          <div className="paper-links">
-            <a href={selected.paper.arxivUrl}>
-              Read on arXiv <ArrowUpRight size={14} />
-            </a>
-            {selected.paper.doi && (
-              <a href={`https://doi.org/${selected.paper.doi}`}>
-                Published paper <ArrowUpRight size={14} />
-              </a>
-            )}
-            {selected.paper.codeUrl && (
-              <a href={selected.paper.codeUrl}>
-                Code <ArrowUpRight size={14} />
-              </a>
-            )}
-          </div>
-        </article>
       </div>
     </div>
   );

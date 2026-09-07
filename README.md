@@ -68,7 +68,7 @@ To use a different domain, update the metadata URL in `app/layout.tsx` and the c
 Original illustrations were generated with the built-in image generation tool, using the supplied climbing illustration as a style reference. They are decorative artwork, not scientific figures or a portrait of Yingjian.
 
 - `public/artwork/quantum-holds.png`: eight holds, four columns and two rows. Each has a simple pattern related to its paper topic.
-- `public/artwork/climbing-poses.png`: four back-view poses of the same climber, one row. The rendered scene shows only one frame at a time.
+- `public/artwork/climbing-poses.png`: four back-view poses of the same climber, one row. The scene uses the fourth frame, with the climber fixed at the highest colored hold.
 - Generation and transparency-extraction prompts: `content/artwork-prompts.json` and `content/climbing-poses-prompts.json`.
 
-Colored holds select real papers. Gray holds provide contact points and space for future papers; they do not claim that additional projects exist. Paper details update immediately, independently of the character animation. The page respects reduced-motion preferences and provides a collapsible text list.
+Colored holds select real papers. Gray holds provide contact points and space for future papers; they do not claim that additional projects exist. Colored holds have no visible text labels. Hover, tap, or keyboard activation opens a card with publication details and links; Yingjian Liu is bolded in the author list. Escape or the close button dismisses the card. The climber remains fixed at the highest colored hold. The page respects reduced-motion preferences and provides a collapsible text list.

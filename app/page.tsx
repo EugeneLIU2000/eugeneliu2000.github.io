@@ -51,44 +51,48 @@ export default function Home() {
           aria-labelledby="intro-title"
         >
           <div className="intro-copy">
-            <h1 id="intro-title">Yingjian Liu</h1>
-            <p className="intro-role">
-              PhD candidate in theoretical physics · Leiden University
-            </p>
-            <p className="bio">
-              I am a PhD candidate in the{' '}
-              <a href="https://aqa.liacs.nl/">
-                Applied Quantum Algorithms group
-              </a>{' '}
-              at Leiden University, supervised by{' '}
-              <a href="https://jtura.cat/">Jordi Tura</a> and{' '}
-              <a href="https://stefanopolla.com/">Stefano Polla</a>.
-            </p>
-            <p className="bio">
-              My research focuses on quantum simulation, quantum algorithms, and
-              quantum information, with an emphasis on fault-tolerant quantum
-              computing.
-            </p>
-            <div className="intro-links">
-              <a className="text-link" href={scholar}>
-                Google Scholar <ArrowUpRight size={15} />
-              </a>
-              <a
-                className="text-link"
-                href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu"
-              >
-                University profile <ArrowUpRight size={15} />
-              </a>
-              <a
-                className="text-link"
-                href="mailto:yingjian@lorentz.leidenuniv.nl"
-              >
-                Email <ArrowUpRight size={15} />
-              </a>
+            <div className="intro-identity">
+              <h1 id="intro-title">Yingjian Liu</h1>
+              <p className="intro-role">
+                PhD candidate in theoretical physics · Leiden University
+              </p>
             </div>
-            <p className="personal-note">
-              Outside research, I enjoy bouldering.
-            </p>
+            <div className="intro-details">
+              <p className="bio">
+                I work in the{' '}
+                <a href="https://aqa.liacs.nl/">
+                  Applied Quantum Algorithms group
+                </a>{' '}
+                at Leiden University, supervised by{' '}
+                <a href="https://jtura.cat/">Jordi Tura</a> and{' '}
+                <a href="https://stefanopolla.com/">Stefano Polla</a>.
+              </p>
+              <p className="bio">
+                My research focuses on quantum simulation, quantum algorithms,
+                and quantum information, with an emphasis on fault-tolerant
+                quantum computing.
+              </p>
+              <div className="intro-links">
+                <a className="text-link" href={scholar}>
+                  Google Scholar <ArrowUpRight size={15} />
+                </a>
+                <a
+                  className="text-link"
+                  href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu"
+                >
+                  University profile <ArrowUpRight size={15} />
+                </a>
+                <a
+                  className="text-link"
+                  href="mailto:yingjian@lorentz.leidenuniv.nl"
+                >
+                  Email <ArrowUpRight size={15} />
+                </a>
+              </div>
+              <p className="personal-note">
+                Outside research, I enjoy bouldering.
+              </p>
+            </div>
           </div>
         </section>
         <section
@@ -184,26 +188,28 @@ export default function Home() {
           aria-labelledby="updates-title"
         >
           <SectionHeading title="News" id="updates-title" />
-          {updates.map((update) => (
-            <div className="news-row" key={update.text}>
-              <time dateTime={update.date}>{update.label}</time>
-              <p>
-                {update.url ? (
-                  <a href={update.url}>
-                    {update.text}{' '}
-                    <ArrowUpRight size={13} className="inline-arrow" />
-                  </a>
-                ) : (
-                  update.text
-                )}
-              </p>
-              <span
-                className={`news-kind ${update.type === 'Preprint' ? 'preprint' : ''}`}
-              >
-                {update.type}
-              </span>
-            </div>
-          ))}
+          <div className="news-list">
+            {updates.map((update) => (
+              <div className="news-row" key={update.text}>
+                <time dateTime={update.date}>{update.label}</time>
+                <p>
+                  {update.url ? (
+                    <a href={update.url}>
+                      {update.text}{' '}
+                      <ArrowUpRight size={13} className="inline-arrow" />
+                    </a>
+                  ) : (
+                    update.text
+                  )}
+                </p>
+                <span
+                  className={`news-kind ${update.type === 'Preprint' ? 'preprint' : ''}`}
+                >
+                  {update.type}
+                </span>
+              </div>
+            ))}
+          </div>
         </section>
         <section
           className="journey section-width"
@@ -256,8 +262,8 @@ export default function Home() {
                 <h4>PhD candidate · Theoretical physics</h4>
                 <p className="cv-institution">Leiden University</p>
                 <p>
-                  Quantum simulation and quantum computing in the fault-tolerant
-                  era. Advised by Jordi Tura and Stefano Polla.
+                  Quantum simulation and algorithms for fault-tolerant quantum
+                  computing. Advised by Jordi Tura and Stefano Polla.
                 </p>
               </div>
               <div className="cv-entry">
