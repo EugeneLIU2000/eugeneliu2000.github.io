@@ -33,6 +33,8 @@ for (const path of [
   'favicon.svg',
   'artwork/climbing-poses.png',
   'artwork/quantum-holds.png',
+  'artwork/climbing-wall.png',
+  'photos/yingjian-liu.jpg',
 ]) {
   assert(existsSync(resolve(output, path)), `Missing public asset: ${path}`);
   assert(
@@ -54,5 +56,5 @@ assert(
   'A local preview URL remains in the export.',
 );
 console.log(
-  `Static export verified: ${publications.length} papers, two illustration assets, ${new Set(assetPaths).size} client assets.`,
+  `Static export verified: ${publications.length} papers, four visual assets, ${new Set(assetPaths).size} client assets.`,
 );

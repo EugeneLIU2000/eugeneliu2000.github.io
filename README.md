@@ -11,7 +11,8 @@ Source: https://github.com/EugeneLIU2000/eugeneliu2000.github.io
 - **学术动态**：编辑 `content/updates.json`。每条记录包含 `label`（显示日期）、`date`（可选机器日期）、`type`、`text` 和可选 `url`。最新动态放在最前面。预印本首次上 arXiv 和期刊正式发表是两个不同事件，请分别记载。
 - **论文列表**：编辑 `content/publications.json` 中的 `publications`。保留准确作者顺序、论文标题、arXiv 编号和 DOI。没有正式发表的论文不要填写 `venue` 或 `publicationDate`。文字列表按正式发表日期或首次上传日期排序。攀岩路线按首次上传 arXiv 的时间从下向上排列；岩点对应关系和位置在 `components/bouldering-research.tsx` 的 `route` 中维护。原始核实来源记录在 `sources`。
 - **个人介绍、经历和教学**：编辑 `app/page.tsx`。
-- **相册**：把你自己的照片放入 `public/photos/`，然后在 `content/photos.json` 加入记录。支持网格浏览、点击放大和 Esc 关闭。空数组会显示真实的 “Photos coming soon” 状态。当前没有你的日常照片；没有使用他人的照片冒充。
+- **主页照片**：`public/photos/yingjian-liu.jpg` 使用本人提供的原图，以 4:3 比例展示；桌面位于介绍区右侧，手机位于姓名与简介之间。
+- **相册**：把你自己的照片放入 `public/photos/`，然后在 `content/photos.json` 加入记录。支持网格浏览、点击放大和 Esc 关闭。空数组会显示真实的 “Photos coming soon” 状态。主页照片和日常相册分别维护。
 
 相册记录示例（仅文档示例，不会显示在网站上）：
 
@@ -69,6 +70,9 @@ Original illustrations were generated with the built-in image generation tool, u
 
 - `public/artwork/quantum-holds.png`: eight holds, four columns and two rows. Each has a simple pattern related to its paper topic.
 - `public/artwork/climbing-poses.png`: four back-view poses of the same climber, one row. The scene uses the fourth frame, with the climber fixed at the highest colored hold.
+- `public/artwork/climbing-wall.png`: a blue-gray wall with broad flat facets, generated with the built-in image tool. The complete prompt is saved in `content/climbing-wall-prompt.txt`.
 - Generation and transparency-extraction prompts: `content/artwork-prompts.json` and `content/climbing-poses-prompts.json`.
+
+The wall extends beyond the text column and uses a taller canvas. The climber remains 125px wide on desktop, 104px on narrow screens, and 93px below 381px; enlarging the wall does not scale the person.
 
 Colored holds select real papers. Gray holds provide contact points and space for future papers; they do not claim that additional projects exist. Colored holds have no visible text labels. Hover, tap, or keyboard activation opens a card with publication details and links; Yingjian Liu is bolded in the author list. Escape or the close button dismisses the card. The climber remains fixed at the highest colored hold. The page respects reduced-motion preferences and provides a collapsible text list.

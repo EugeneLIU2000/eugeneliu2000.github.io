@@ -1,4 +1,5 @@
 import { ArrowUpRight, Mail } from 'lucide-react';
+import Image from 'next/image';
 import { BoulderingResearch } from '@/components/bouldering-research';
 import { PublicationList } from '@/components/publication-list';
 import { PhotoJournal, type JournalPhoto } from '@/components/photo-journal';
@@ -51,48 +52,59 @@ export default function Home() {
           aria-labelledby="intro-title"
         >
           <div className="intro-copy">
-            <div className="intro-identity">
-              <h1 id="intro-title">Yingjian Liu</h1>
-              <p className="intro-role">
-                PhD candidate in theoretical physics · Leiden University
-              </p>
-            </div>
-            <div className="intro-details">
-              <p className="bio">
-                I work in the{' '}
-                <a href="https://aqa.liacs.nl/">
-                  Applied Quantum Algorithms group
-                </a>{' '}
-                at Leiden University, supervised by{' '}
-                <a href="https://jtura.cat/">Jordi Tura</a> and{' '}
-                <a href="https://stefanopolla.com/">Stefano Polla</a>.
-              </p>
-              <p className="bio">
-                My research focuses on quantum simulation, quantum algorithms,
-                and quantum information, with an emphasis on fault-tolerant
-                quantum computing.
-              </p>
-              <div className="intro-links">
-                <a className="text-link" href={scholar}>
-                  Google Scholar <ArrowUpRight size={15} />
-                </a>
-                <a
-                  className="text-link"
-                  href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu"
-                >
-                  University profile <ArrowUpRight size={15} />
-                </a>
-                <a
-                  className="text-link"
-                  href="mailto:yingjian@lorentz.leidenuniv.nl"
-                >
-                  Email <ArrowUpRight size={15} />
-                </a>
+            <div className="intro-text">
+              <div className="intro-identity">
+                <h1 id="intro-title">Yingjian Liu</h1>
+                <p className="intro-role">
+                  PhD candidate in theoretical physics · Leiden University
+                </p>
               </div>
-              <p className="personal-note">
-                Outside research, I enjoy bouldering.
-              </p>
+              <div className="intro-details">
+                <p className="bio">
+                  I work in the{' '}
+                  <a href="https://aqa.liacs.nl/">
+                    Applied Quantum Algorithms group
+                  </a>{' '}
+                  at Leiden University, supervised by{' '}
+                  <a href="https://jtura.cat/">Jordi Tura</a> and{' '}
+                  <a href="https://stefanopolla.com/">Stefano Polla</a>.
+                </p>
+                <p className="bio">
+                  My research focuses on quantum simulation, quantum algorithms,
+                  and quantum information, with an emphasis on fault-tolerant
+                  quantum computing.
+                </p>
+                <div className="intro-links">
+                  <a className="text-link" href={scholar}>
+                    Google Scholar <ArrowUpRight size={15} />
+                  </a>
+                  <a
+                    className="text-link"
+                    href="https://www.universiteitleiden.nl/en/staffmembers/yingjian-liu"
+                  >
+                    University profile <ArrowUpRight size={15} />
+                  </a>
+                  <a
+                    className="text-link"
+                    href="mailto:yingjian@lorentz.leidenuniv.nl"
+                  >
+                    Email <ArrowUpRight size={15} />
+                  </a>
+                </div>
+                <p className="personal-note">
+                  Outside research, I enjoy bouldering.
+                </p>
+              </div>
             </div>
+            <figure className="profile-photo">
+              <Image
+                src="/photos/yingjian-liu.jpg"
+                alt="Yingjian Liu"
+                width={1280}
+                height={960}
+                priority
+              />
+            </figure>
           </div>
         </section>
         <section

@@ -17,28 +17,28 @@ const route = [
     label: 'Inverse circuits',
     sprite: 7,
     x: 40,
-    y: 86,
+    y: 90,
   },
   {
     id: '2403.04704',
     label: 'Inverse evolution',
     sprite: 6,
     x: 60,
-    y: 77,
+    y: 80,
   },
   {
     id: '2405.03338',
     label: 'State localization',
     sprite: 5,
     x: 37,
-    y: 68,
+    y: 70,
   },
   {
     id: '2411.14292',
     label: 'Symmetry tests',
     sprite: 4,
     x: 60,
-    y: 59,
+    y: 60,
   },
   {
     id: '2412.01696',
@@ -52,21 +52,21 @@ const route = [
     label: 'Quantum learning',
     sprite: 3,
     x: 58,
-    y: 41,
+    y: 40,
   },
   {
     id: '2511.04608',
     label: 'Qubit routing',
     sprite: 1,
     x: 36,
-    y: 32,
+    y: 29,
   },
   {
     id: '2607.26154',
     label: 'Quantum magic',
     sprite: 0,
     x: 55,
-    y: 23,
+    y: 18,
   },
 ].map((hold) => {
   const paper = publicationData.publications.find(
@@ -101,6 +101,14 @@ const futureHolds = [
   [48, 54, 1, 17],
   [48, 72, 2, -15],
   [48, 90, 6, 12],
+  [45, 26, 2, -14],
+  [52, 34, 7, 23],
+  [43, 43, 1, 12],
+  [53, 54, 4, -16],
+  [46, 63, 3, 17],
+  [44, 73, 6, -19],
+  [54, 83, 0, 15],
+  [34, 89, 5, -11],
 ];
 
 // Contact positions in the fourth illustration frame, relative to its cell.

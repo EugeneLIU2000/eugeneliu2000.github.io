@@ -1040,16 +1040,22 @@ h1 {
 }
 .wall-surface {
   position: relative;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  width: min(1440px, calc(100vw - 48px));
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #c3cfd4;
+  background-image: url('/artwork/climbing-wall.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border: 1px solid #aebdc4;
+  border-radius: 5px;
 }
 .climbing-canvas {
   --climber-size: 125px;
   position: relative;
   width: 100%;
-  max-width: 760px;
-  height: 710px;
+  max-width: none;
+  height: clamp(950px, 78vw, 1120px);
   margin-inline: auto;
   isolation: isolate;
 }
@@ -1063,7 +1069,7 @@ h1 {
 .future-hold {
   position: absolute;
   width: 34px;
-  opacity: 0.23;
+  opacity: 0.4;
   filter: grayscale(1);
   pointer-events: none;
   z-index: 0;
@@ -1073,7 +1079,7 @@ h1 {
   width: 22px;
   transform: translate(-50%, -50%);
   filter: grayscale(1);
-  opacity: 0.25;
+  opacity: 0.48;
   pointer-events: none;
 }
 .paper-hold {
@@ -1094,7 +1100,7 @@ h1 {
   content: '';
   position: absolute;
   inset: 1px;
-  border: 1px solid var(--border);
+  border: 1px solid #ffffffbb;
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.18s;
@@ -1249,10 +1255,11 @@ h1 {
   }
   .climbing-canvas {
     --climber-size: 104px;
-    height: 650px;
+    height: 860px;
   }
   .wall-surface {
-    border-radius: 8px;
+    width: calc(100vw - 24px);
+    border-radius: 4px;
   }
   .paper-hold {
     width: 58px;
@@ -1271,7 +1278,7 @@ h1 {
 @media (max-width: 380px) {
   .climbing-canvas {
     --climber-size: 93px;
-    height: 620px;
+    height: 820px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1338,16 +1345,37 @@ body {
 .academic-intro .intro-copy {
   max-width: none;
   display: grid;
-  grid-template-columns: 0.85fr 1.4fr;
-  gap: 76px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.85fr);
+  gap: 64px;
+  align-items: center;
+}
+.intro-text {
+  min-width: 0;
+}
+.academic-intro .intro-details {
+  margin-top: 25px;
+}
+.profile-photo {
+  margin: 0;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--card);
+}
+.profile-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 2px;
 }
 .academic-intro h1 {
   font-size: clamp(40px, 4.5vw, 52px);
   letter-spacing: -1.7px;
 }
 .intro-role {
-  max-width: 285px;
+  max-width: none;
   font-size: 15px;
   line-height: 1.65;
   color: var(--muted-foreground);
@@ -1560,8 +1588,8 @@ body {
     width: calc(100% - 64px);
   }
   .academic-intro .intro-copy {
-    grid-template-columns: 0.85fr 1.4fr;
-    gap: 36px;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 30px;
   }
   .updates,
   .life {
@@ -1591,6 +1619,20 @@ body {
   .academic-intro .intro-copy {
     grid-template-columns: 1fr;
     gap: 27px;
+  }
+  .intro-text {
+    display: contents;
+  }
+  .intro-identity {
+    grid-row: 1;
+  }
+  .profile-photo {
+    grid-row: 2;
+    width: min(100%, 360px);
+  }
+  .academic-intro .intro-details {
+    grid-row: 3;
+    margin-top: 0;
   }
   .intro-role {
     max-width: none;
