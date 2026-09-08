@@ -29,9 +29,6 @@ export default function Home() {
         Skip to content
       </a>
       <header className="site-header">
-        <a className="wordmark" href="#about" aria-label="Yingjian Liu, home">
-          YL<span>.</span>
-        </a>
         <nav aria-label="Main navigation">
           <a href="#about">About</a>
           <a href="#research">Publications</a>
@@ -229,7 +226,7 @@ export default function Home() {
           aria-labelledby="journey-title"
         >
           <SectionHeading
-            title="Education and research experience"
+            title="Education"
             id="journey-title"
           />
           <div className="europe-card">
@@ -268,27 +265,6 @@ export default function Home() {
           </div>
           <div className="cv-columns">
             <div className="experience">
-              <h3 className="subsection-title">Positions and degrees</h3>
-              <div className="cv-entry">
-                <p className="cv-date">Nov 2024–present · The Netherlands</p>
-                <h4>PhD candidate · Theoretical physics</h4>
-                <p className="cv-institution">Leiden University</p>
-                <p>
-                  Quantum simulation and algorithms for fault-tolerant quantum
-                  computing. Advised by Jordi Tura and Stefano Polla.
-                </p>
-              </div>
-              <div className="cv-entry">
-                <p className="cv-date">Dec 2023–Oct 2024 · China</p>
-                <h4>Research assistant</h4>
-                <p className="cv-institution">
-                  Hong Kong University of Science and Technology (Guangzhou)
-                </p>
-                <p>
-                  Quantum algorithm design and quantum information theory, with
-                  Xin Wang.
-                </p>
-              </div>
               <div className="cv-entry">
                 <p className="cv-date">Sep 2017–Jun 2021 · China</p>
                 <h4>Bachelor of Science · Electronics</h4>
@@ -312,15 +288,6 @@ export default function Home() {
                 <h4>Methods of Mathematical Physics</h4>
                 <p>Teaching assistant</p>
               </div>
-              <h3 className="subsection-title awards-heading">
-                Selected awards
-              </h3>
-              <p className="award-line">
-                <span>2021–2023</span>Erasmus Mundus scholarship
-              </p>
-              <p className="award-line">
-                <span>2019</span>National Encouragement Scholarship
-              </p>
             </div>
           </div>
         </section>

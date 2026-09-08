@@ -132,9 +132,8 @@ export function BoulderingResearch() {
   return (
     <div className="publication-climb">
       <div className="climb-toolbar">
-        <p>Hover or tap a colored hold to view a paper.</p>
         <span className="future-note">
-          <i /> Space for future papers
+          <i /> Space for further mysterious discoveries
         </span>
       </div>
       <div className="wall-surface">
