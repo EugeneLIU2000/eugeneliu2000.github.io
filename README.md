@@ -12,7 +12,8 @@ Source: https://github.com/EugeneLIU2000/eugeneliu2000.github.io
 - **论文列表**：编辑 `content/publications.json` 中的 `publications`。保留准确作者顺序、论文标题、arXiv 编号和 DOI。没有正式发表的论文不要填写 `venue` 或 `publicationDate`。文字列表按正式发表日期或首次上传日期排序。攀岩路线按首次上传 arXiv 的时间从下向上排列；岩点对应关系和位置在 `components/bouldering-research.tsx` 的 `route` 中维护。原始核实来源记录在 `sources`。
 - **个人介绍、经历和教学**：编辑 `app/page.tsx`。
 - **主页照片**：`public/photos/yingjian-liu.jpg` 使用本人提供的原图，以 4:3 比例展示；桌面位于介绍区右侧，手机位于姓名与简介之间。
-- **相册**：把你自己的照片放入 `public/photos/`，然后在 `content/photos.json` 加入记录。支持网格浏览、点击放大和 Esc 关闭。空数组会显示真实的 “Photos coming soon” 状态。主页照片和日常相册分别维护。
+- **Moments 相册**：照片位于 `public/photos/moments/`，记录在 `content/photos.json`。按年份从早到晚排列，同一年保留提供顺序。缩略图统一为 4:3，`objectPosition` 可调整取景；点击后显示完整照片，Esc 关闭。`width` 和 `height` 为照片实际像素尺寸。主页照片和日常相册分别维护。
+- **Footprints**：编辑 `content/footprints.json` 的地点和国家代码。当前按本人提供名单标记十二个国家，中国记录同时高亮大陆和台湾。地图使用 Natural Earth 的公开领域数据，几何保存在 `content/world-map.json`，不依赖外部地图服务。原始数据来源及转换方法见 `scripts/prepare-world-map.py`。
 
 相册记录示例（仅文档示例，不会显示在网站上）：
 
@@ -23,7 +24,10 @@ Source: https://github.com/EugeneLIU2000/eugeneliu2000.github.io
     "alt": "Describe what is visible in the photograph",
     "caption": "Your caption",
     "location": "Optional location",
-    "date": "Optional date"
+    "date": "2026",
+    "width": 1600,
+    "height": 1200,
+    "objectPosition": "50% 50%"
   }
 ]
 ```
@@ -74,5 +78,9 @@ Original illustrations were generated with the built-in image generation tool, u
 - Generation and transparency-extraction prompts: `content/artwork-prompts.json` and `content/climbing-poses-prompts.json`.
 
 The wall extends beyond the text column and uses a taller canvas. The climber remains 125px wide on desktop, 104px on narrow screens, and 93px below 381px; enlarging the wall does not scale the person.
+
+A translucent gray-green gradient blends the original wall into the page palette. Colored holds occupy the lower 57% of the wall, with the highest grip at 43% from the top; the body sits near the middle, below the gray future holds. Desktop text uses a larger reading scale above 900px, while mobile type sizes stay unchanged.
+
+The Footprints map follows the compact visited-country idea from https://jtura.cat/index.php?page=map. Geographic data: https://www.naturalearthdata.com/about/terms-of-use/ (public domain). The map is rendered locally as SVG; country names appear on hover and the visited places are also listed as text.
 
 Colored holds select real papers. Gray holds provide contact points and space for future papers; they do not claim that additional projects exist. Colored holds have no visible text labels. Hover, tap, or keyboard activation opens a card with publication details and links; Yingjian Liu is bolded in the author list. Escape or the close button dismisses the card. The climber remains fixed at the highest colored hold. The page respects reduced-motion preferences and provides a collapsible text list.

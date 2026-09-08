@@ -1,0 +1,14 @@
+[
+  { "name": "Belgium", "codes": ["BEL"] },
+  { "name": "China (including Taiwan)", "codes": ["CHN", "TWN"] },
+  { "name": "France", "codes": ["FRA"] },
+  { "name": "Germany", "codes": ["DEU"] },
+  { "name": "Italy", "codes": ["ITA"] },
+  { "name": "Netherlands", "codes": ["NLD"] },
+  { "name": "Portugal", "codes": ["PRT"] },
+  { "name": "Spain", "codes": ["ESP"] },
+  { "name": "Sweden", "codes": ["SWE"] },
+  { "name": "Switzerland", "codes": ["CHE"] },
+  { "name": "United Kingdom", "codes": ["GBR"] },
+  { "name": "United States", "codes": ["USA"] }
+]

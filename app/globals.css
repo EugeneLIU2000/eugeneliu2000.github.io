@@ -28,18 +28,26 @@
   --radius-xl: 12px;
 }
 :root {
-  --background: #f7f8f8;
+  --background: #f1f4f0;
+  --page-mid: #e7eeea;
+  --page-end: #edf1e9;
+  --wall-wash-start: #eef2eac9;
+  --wall-wash-end: #dce8e0c2;
   --foreground: #223039;
-  --primary: #285d68;
+  --primary: #315f58;
   --primary-foreground: #fff;
-  --muted: #edf1f3;
+  --muted: #e4ebe5;
   --muted-foreground: #596871;
-  --card: #fff;
-  --border: #d8e0e4;
+  --card: #f8faf5;
+  --border: #d1ddd5;
   --serif: Georgia, 'Times New Roman', serif;
 }
 .dark {
   --background: #192727;
+  --page-mid: #24342f;
+  --page-end: #1c2c29;
+  --wall-wash-start: #243530c9;
+  --wall-wash-end: #33453ed4;
   --foreground: #f2f4ee;
   --primary: #99cbd5;
   --primary-foreground: #192727;
@@ -57,7 +65,13 @@ html {
 }
 body {
   margin: 0;
-  background: var(--background);
+  background: linear-gradient(
+    180deg,
+    var(--background),
+    var(--page-mid) 35%,
+    var(--background) 72%,
+    var(--page-end)
+  );
   color: var(--foreground);
   font-family: Arial, 'Helvetica Neue', sans-serif;
   font-size: 16px;
@@ -755,11 +769,16 @@ h1 {
 }
 .journal-photo {
   margin: 0;
+  padding: 8px 8px 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 3px;
 }
 .photo-trigger {
   border: 0;
   padding: 0;
   width: 100%;
+  aspect-ratio: 4 / 3;
   position: relative;
   cursor: zoom-in;
   background: var(--muted);
@@ -768,6 +787,7 @@ h1 {
 .photo-trigger img {
   display: block;
   width: 100%;
+  height: 100%;
   aspect-ratio: 4/3;
   object-fit: cover;
 }
@@ -786,7 +806,7 @@ h1 {
   opacity: 1;
 }
 .journal-photo figcaption {
-  padding-top: 12px;
+  padding: 13px 5px 0;
   font-size: 15px;
 }
 .journal-photo small {
@@ -1043,11 +1063,13 @@ h1 {
   width: min(1440px, calc(100vw - 48px));
   left: 50%;
   transform: translateX(-50%);
-  background-color: #c3cfd4;
-  background-image: url('/artwork/climbing-wall.png');
+  background-color: var(--muted);
+  background-image:
+    linear-gradient(145deg, var(--wall-wash-start), var(--wall-wash-end)),
+    url('/artwork/climbing-wall.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  border: 1px solid #aebdc4;
+  border: 1px solid var(--border);
   border-radius: 5px;
 }
 .climbing-canvas {
@@ -1528,12 +1550,15 @@ body {
   font-size: 16px;
 }
 .cv-columns {
-  margin-top: 40px;
+  margin-top: 0;
   gap: 60px;
 }
 .cv-entry {
   border-left-color: var(--border);
   padding-left: 24px;
+}
+.cv-entry p.cv-note {
+  margin-top: 13px;
 }
 .cv-entry::before {
   width: 5px;
@@ -1553,9 +1578,7 @@ body {
   grid-template-columns: 85px 1fr;
 }
 .life {
-  display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
-  gap: 50px;
+  display: block;
 }
 .album-empty {
   min-height: 155px;
@@ -1701,6 +1724,241 @@ body {
   .site-header nav {
     gap: 11px;
     font-size: 12px;
+  }
+}
+/* Compact travel map and the desktop reading scale. */
+.footprints {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 50px;
+  padding-block: 48px 64px;
+}
+.footprints-content {
+  min-width: 0;
+  max-width: 780px;
+}
+.footprints-intro {
+  color: var(--muted-foreground);
+  font-size: 1rem;
+}
+.footprints-map {
+  margin: 20px 0 24px;
+}
+.footprints-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.footprints-map path {
+  fill: #c6d2ca;
+  stroke: var(--background);
+  stroke-width: 0.65;
+  stroke-linejoin: round;
+  fill-rule: evenodd;
+  vector-effect: non-scaling-stroke;
+}
+.footprints-map path[data-visited] {
+  fill: #507f6e;
+}
+.footprints-map path[data-visited]:hover {
+  fill: var(--primary);
+}
+.dark .footprints-map path {
+  fill: #4a5c55;
+}
+.dark .footprints-map path[data-visited] {
+  fill: #a3c4b5;
+}
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+.map-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #507f6e;
+}
+.visited-places {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+.map-credit {
+  margin-top: 20px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.map-credit a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (min-width: 901px) {
+  body {
+    font-size: 1.125rem;
+  }
+  .section-width,
+  .site-header {
+    width: min(1160px, calc(100% - 96px));
+  }
+  .site-header nav {
+    font-size: 1.0625rem;
+    gap: 32px;
+  }
+  .header-contact,
+  .text-link {
+    font-size: 1rem;
+  }
+  .academic-intro h1 {
+    font-size: 4rem;
+  }
+  .intro-role {
+    font-size: 1.1875rem;
+  }
+  .academic-intro .bio {
+    font-size: 1.25rem;
+    line-height: 1.75;
+  }
+  .academic-intro .personal-note {
+    font-size: 1.0625rem;
+  }
+  .section-heading h2 {
+    font-size: 2.25rem;
+  }
+  .section-heading {
+    margin-bottom: 36px;
+  }
+  .updates,
+  .research,
+  .journey,
+  .life {
+    padding-block: 56px 64px;
+  }
+  .climb-toolbar > p,
+  .publication-list-toggle {
+    font-size: 1rem;
+  }
+  .future-note {
+    font-size: 0.875rem;
+  }
+  .publication h3 {
+    font-size: 1.75rem;
+  }
+  .publication .authors,
+  .publication .paper-summary {
+    font-size: 1.0625rem;
+  }
+  .publication-meta,
+  .paper-links a,
+  .publication-year {
+    font-size: 0.9375rem;
+  }
+  .latest-label,
+  .publication-year > span {
+    font-size: 0.875rem;
+  }
+  .paper-preview[data-slot='popover-content'] {
+    width: 410px;
+    padding: 24px;
+  }
+  .paper-preview-title {
+    font-size: 1.625rem;
+  }
+  .paper-preview .authors {
+    font-size: 1rem;
+  }
+  .paper-preview-venue,
+  .paper-preview .paper-links a {
+    font-size: 0.9375rem;
+  }
+  .paper-preview-topline > p {
+    font-size: 0.875rem;
+  }
+  .news-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+  .news-row p {
+    font-size: 1.125rem;
+  }
+  .news-row time,
+  .news-kind {
+    font-size: 0.875rem;
+  }
+  .cv-entry h4,
+  .teaching-entry h4 {
+    font-size: 1.25rem;
+  }
+  .cv-entry p:not(.cv-date),
+  .teaching-entry p:not(.cv-date) {
+    font-size: 1.0625rem;
+  }
+  .cv-date {
+    font-size: 0.875rem !important;
+  }
+  .subsection-title {
+    font-size: 1.625rem;
+  }
+  .journal-photo figcaption {
+    font-size: 1.0625rem;
+  }
+  .journal-photo small {
+    font-size: 0.875rem;
+  }
+  .footprints-intro {
+    font-size: 1.125rem;
+  }
+  .visited-places {
+    font-size: 1rem;
+  }
+  .footer-name {
+    font-size: 1.5rem;
+  }
+  .site-footer p {
+    font-size: 0.875rem;
+  }
+}
+@media (min-width: 651px) and (max-width: 900px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footprints {
+    grid-template-columns: 125px minmax(0, 1fr);
+    gap: 30px;
+  }
+}
+@media (max-width: 650px) {
+  .site-header nav {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .footprints {
+    display: block;
+    padding-block: 34px 40px;
+  }
+  .footprints-map {
+    margin-top: 14px;
+  }
+  .visited-places {
+    gap: 6px 16px;
+  }
+}
+@media (max-width: 360px) {
+  .site-header nav {
+    gap: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footprints-map path {
+    transition: none;
   }
 }
 @media print {

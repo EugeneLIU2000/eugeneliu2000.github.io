@@ -22,6 +22,9 @@ export type JournalPhoto = {
   caption: string;
   location?: string;
   date?: string;
+  width?: number;
+  height?: number;
+  objectPosition?: string;
 };
 
 export function PhotoJournal({ photos }: { photos: JournalPhoto[] }) {
@@ -31,7 +34,7 @@ export function PhotoJournal({ photos }: { photos: JournalPhoto[] }) {
         <EmptyHeader>
           <Camera size={28} strokeWidth={1.3} aria-hidden="true" />
           <EmptyTitle className="album-empty-title">
-            Photos coming soon
+            Moments coming soon
           </EmptyTitle>
           <EmptyDescription>
             Personal photographs will be added here.
@@ -42,50 +45,53 @@ export function PhotoJournal({ photos }: { photos: JournalPhoto[] }) {
 
   return (
     <div className="photo-grid">
-      {photos.map((photo) => (
-        <Dialog key={photo.src}>
-          <figure className="journal-photo">
-            <DialogTrigger
-              className="photo-trigger"
-              aria-label={`View photograph: ${photo.caption}`}
-            >
+      {[...photos]
+        .sort((a, b) => (a.date || '').localeCompare(b.date || ''))
+        .map((photo) => (
+          <Dialog key={photo.src}>
+            <figure className="journal-photo">
+              <DialogTrigger
+                className="photo-trigger"
+                aria-label={`View photograph: ${photo.caption}`}
+              >
+                <Image
+                  unoptimized
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  width={photo.width || 800}
+                  height={photo.height || 600}
+                  style={{ objectPosition: photo.objectPosition || '50% 50%' }}
+                />
+                <span className="photo-expand">
+                  <Maximize2 size={17} aria-hidden="true" />
+                </span>
+              </DialogTrigger>
+              <figcaption>
+                <span>{photo.caption}</span>
+                <small>
+                  {[photo.location, photo.date].filter(Boolean).join(' · ')}
+                </small>
+              </figcaption>
+            </figure>
+            <DialogContent className="photo-dialog">
               <Image
                 unoptimized
                 src={photo.src}
                 alt={photo.alt}
-                loading="lazy"
-                width={800}
-                height={600}
+                width={photo.width || 1600}
+                height={photo.height || 1200}
               />
-              <span className="photo-expand">
-                <Maximize2 size={17} aria-hidden="true" />
-              </span>
-            </DialogTrigger>
-            <figcaption>
-              <span>{photo.caption}</span>
-              <small>
-                {[photo.location, photo.date].filter(Boolean).join(' · ')}
-              </small>
-            </figcaption>
-          </figure>
-          <DialogContent className="photo-dialog">
-            <Image
-              unoptimized
-              src={photo.src}
-              alt={photo.alt}
-              width={1600}
-              height={1200}
-            />
-            <div>
-              <DialogTitle>{photo.caption}</DialogTitle>
-              <DialogDescription>
-                {[photo.location, photo.date].filter(Boolean).join(' · ') ||
-                  'Personal photograph.'}
-              </DialogDescription>
-            </div>
-          </DialogContent>
-        </Dialog>
-      ))}
+              <div>
+                <DialogTitle>{photo.caption}</DialogTitle>
+                <DialogDescription>
+                  {[photo.location, photo.date].filter(Boolean).join(' · ') ||
+                    'Personal photograph.'}
+                </DialogDescription>
+              </div>
+            </DialogContent>
+          </Dialog>
+        ))}
     </div>
   );
 }

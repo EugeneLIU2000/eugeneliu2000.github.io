@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { BoulderingResearch } from '@/components/bouldering-research';
 import { PublicationList } from '@/components/publication-list';
 import { PhotoJournal, type JournalPhoto } from '@/components/photo-journal';
+import { Footprints } from '@/components/footprints';
 import publicationData from '@/content/publications.json';
 import updates from '@/content/updates.json';
 import photos from '@/content/photos.json';
@@ -33,7 +34,8 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#research">Publications</a>
           <a href="#journey">CV</a>
-          <a href="#life">Photos</a>
+          <a href="#life">Moments</a>
+          <a href="#footprints">Footprints</a>
         </nav>
         <a
           className="header-contact"
@@ -225,46 +227,28 @@ export default function Home() {
           id="journey"
           aria-labelledby="journey-title"
         >
-          <SectionHeading
-            title="Education"
-            id="journey-title"
-          />
-          <div className="europe-card">
-            <p className="eyebrow">
-              Erasmus Mundus Europhotonics · Sep 2021–Oct 2023
-            </p>
-            <h3>Master of Science in Optics</h3>
-            <p>
-              Joint master’s programme at universities in France, Germany, and
-              Spain. Supported by an Erasmus Mundus Joint Master Degree
-              scholarship.
-            </p>
-            <div className="country-grid">
-              <div>
-                <h4>France</h4>
-                <p>Aix-Marseille University</p>
-              </div>
-              <div>
-                <h4>Germany</h4>
-                <p>Karlsruhe Institute of Technology</p>
-              </div>
-              <div>
-                <h4>Spain</h4>
-                <p>Universitat Politècnica de Catalunya</p>
-              </div>
-            </div>
-            <div className="master-thesis">
-              <span>Master’s thesis · May–Oct 2023</span>
-              <p>
-                At <strong>ICFO — The Institute of Photonic Sciences</strong>,
-                Barcelona, I worked on variational quantum simulation of
-                many-body quantum systems with Marcin Płodzień, Paolo Stornati,
-                and Maciej Lewenstein.
-              </p>
-            </div>
-          </div>
+          <SectionHeading title="Education" id="journey-title" />
           <div className="cv-columns">
             <div className="experience">
+              <div className="cv-entry">
+                <p className="cv-date">
+                  Sep 2021–Oct 2023 · France, Germany, Spain
+                </p>
+                <h4>Master of Science · Optics</h4>
+                <p className="cv-institution">Erasmus Mundus Europhotonics</p>
+                <p>Aix-Marseille University · France</p>
+                <p>Karlsruhe Institute of Technology · Germany</p>
+                <p>Universitat Politècnica de Catalunya · Spain</p>
+                <p className="cv-note">
+                  Erasmus Mundus Joint Master Degree scholarship.
+                </p>
+                <p className="cv-note">
+                  Master’s thesis at ICFO — The Institute of Photonic Sciences,
+                  Barcelona, on variational quantum simulation of many-body
+                  systems, with Marcin Płodzień, Paolo Stornati, and Maciej
+                  Lewenstein.
+                </p>
+              </div>
               <div className="cv-entry">
                 <p className="cv-date">Sep 2017–Jun 2021 · China</p>
                 <h4>Bachelor of Science · Electronics</h4>
@@ -296,8 +280,16 @@ export default function Home() {
           id="life"
           aria-labelledby="life-title"
         >
-          <SectionHeading title="Photos" id="life-title" />
+          <SectionHeading title="Moments" id="life-title" />
           <PhotoJournal photos={photos as JournalPhoto[]} />
+        </section>
+        <section
+          className="footprints section-width"
+          id="footprints"
+          aria-labelledby="footprints-title"
+        >
+          <SectionHeading title="Footprints" id="footprints-title" />
+          <Footprints />
         </section>
       </main>
       <footer className="site-footer section-width">

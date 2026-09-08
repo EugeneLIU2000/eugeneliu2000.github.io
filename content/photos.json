@@ -1,1 +1,82 @@
-[]
+[
+  {
+    "src": "/photos/moments/2023-barcelona-thesis.jpeg",
+    "alt": "Presenting a master’s thesis on quantum simulation in Barcelona.",
+    "caption": "Master’s thesis defense",
+    "location": "Barcelona",
+    "date": "2023",
+    "width": 1024,
+    "height": 768,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2023-castelldefels-kaito.jpeg",
+    "alt": "Holding Kaito on a balcony in Castelldefels at dusk.",
+    "caption": "With Kaito",
+    "location": "Castelldefels",
+    "date": "2023",
+    "width": 1024,
+    "height": 768,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2023-karlsruhe-friends.jpeg",
+    "alt": "A group photograph with Antony and Phuong in Karlsruhe.",
+    "caption": "With Antony and Phuong",
+    "location": "Karlsruhe",
+    "date": "2023",
+    "width": 1024,
+    "height": 768,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2024-xiamen.jpeg",
+    "alt": "Looking out across the sea in Xiamen.",
+    "caption": "By the sea",
+    "location": "Xiamen",
+    "date": "2024",
+    "width": 1182,
+    "height": 665,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2025-oxford-seeqa.jpeg",
+    "alt": "Standing beside a quantum state functions poster at SEEQA in Oxford.",
+    "caption": "SEEQA conference poster session",
+    "location": "Oxford",
+    "date": "2025",
+    "width": 768,
+    "height": 1024,
+    "objectPosition": "50% 32%"
+  },
+  {
+    "src": "/photos/moments/2025-porto.jpeg",
+    "alt": "Rooftops and the Douro River in Porto.",
+    "caption": "Rooftops and river",
+    "location": "Porto",
+    "date": "2025",
+    "width": 2048,
+    "height": 1536,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2026-switzerland.jpeg",
+    "alt": "A lake and snow-covered mountains during an Easter holiday in Switzerland.",
+    "caption": "Easter holiday",
+    "location": "Switzerland",
+    "date": "2026",
+    "width": 480,
+    "height": 360,
+    "objectPosition": "50% 50%"
+  },
+  {
+    "src": "/photos/moments/2026-den-haag-bouldering.jpeg",
+    "alt": "Bouldering on blue holds at an indoor climbing wall in Den Haag.",
+    "caption": "Bouldering",
+    "location": "Den Haag",
+    "date": "2026",
+    "width": 2048,
+    "height": 1536,
+    "objectPosition": "50% 50%"
+  }
+]
