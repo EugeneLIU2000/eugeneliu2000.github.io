@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 import { ArrowUpRight, X } from 'lucide-react';
 import {
   Popover,
@@ -131,12 +132,28 @@ function spritePosition(sprite: number) {
 
 export function BoulderingResearch() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [pinnedId, setPinnedId] = useState<string | null>(null);
+  const pinnedIdRef = useRef<string | null>(null);
+  const keyboardPinRef = useRef<string | null>(null);
+  const [handles] = useState(() =>
+    Object.fromEntries(
+      route.map((hold) => [hold.id, PopoverPrimitive.createHandle()]),
+    ),
+  );
 
   return (
-    <div className="publication-climb">
+    <div
+      className="publication-climb"
+      id="publication-wall"
+      aria-labelledby="wall-title"
+    >
       <div className="climb-toolbar">
+        <div>
+          <h3 id="wall-title">Publication wall</h3>
+          <p>Hover to preview. Click to keep a paper open.</p>
+        </div>
         <span className="future-note">
-          <i /> Space for further mysterious discoveries
+          <i /> Space for future papers
         </span>
       </div>
       <div className="wall-surface">
@@ -172,20 +189,44 @@ export function BoulderingResearch() {
           {route.map((hold) => (
             <Popover
               key={hold.id}
+              handle={handles[hold.id]}
               open={openId === hold.id}
-              onOpenChange={(open) =>
+              onOpenChange={(open, details) => {
+                if (details.reason === 'trigger-hover' && pinnedIdRef.current) {
+                  details.cancel();
+                  return;
+                }
+                if (!open && pinnedIdRef.current === hold.id) {
+                  pinnedIdRef.current = null;
+                  keyboardPinRef.current = null;
+                  setPinnedId(null);
+                }
                 setOpenId((current) =>
                   open ? hold.id : current === hold.id ? null : current,
-                )
-              }
+                );
+              }}
             >
               <PopoverTrigger
                 id={`hold-${hold.id}`}
+                handle={handles[hold.id]}
                 className="paper-hold"
                 style={{ left: `${hold.x}%`, top: `${hold.y}%` }}
-                openOnHover
-                delay={130}
-                closeDelay={220}
+                openOnHover={pinnedId === null}
+                delay={160}
+                closeDelay={300}
+                data-pinned={pinnedId === hold.id || undefined}
+                onClick={(event) => {
+                  // Use one explicit click transition for both early and late hover previews.
+                  event.preventBaseUIHandler();
+                  if (pinnedIdRef.current === hold.id) {
+                    handles[hold.id].close();
+                    return;
+                  }
+                  pinnedIdRef.current = hold.id;
+                  keyboardPinRef.current = event.detail === 0 ? hold.id : null;
+                  setPinnedId(hold.id);
+                  handles[hold.id].open(`hold-${hold.id}`);
+                }}
                 aria-label={hold.paper.title}
               >
                 <span
@@ -198,8 +239,10 @@ export function BoulderingResearch() {
                 className="paper-preview"
                 side="bottom"
                 align="center"
-                sideOffset={10}
-                initialFocus={(type) => type === 'keyboard'}
+                sideOffset={14}
+                initialFocus={(type) =>
+                  type === 'keyboard' || keyboardPinRef.current === hold.id
+                }
                 data-paper={hold.id}
               >
                 <div className="paper-preview-topline">
@@ -212,14 +255,13 @@ export function BoulderingResearch() {
                       hold.paper.publicationDate || hold.paper.firstSubmitted
                     ).slice(0, 4)}
                   </p>
-                  <button
+                  <PopoverPrimitive.Close
                     className="preview-close"
                     type="button"
                     aria-label="Close paper details"
-                    onClick={() => setOpenId(null)}
                   >
                     <X size={16} />
-                  </button>
+                  </PopoverPrimitive.Close>
                 </div>
                 <PopoverTitle className="paper-preview-title">
                   <a

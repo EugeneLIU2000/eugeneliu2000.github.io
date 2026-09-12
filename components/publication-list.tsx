@@ -14,9 +14,13 @@ export function PublicationList({
   count: number;
 }) {
   return (
-    <Collapsible className="publication-list-alternative">
+    <Collapsible
+      className="publication-list-alternative"
+      id="publication-list"
+      defaultOpen
+    >
       <CollapsibleTrigger className="publication-list-toggle">
-        Publication list ({count} papers)
+        All {count} papers
         <ChevronDown size={16} />
       </CollapsibleTrigger>
       <CollapsibleContent keepMounted>{children}</CollapsibleContent>

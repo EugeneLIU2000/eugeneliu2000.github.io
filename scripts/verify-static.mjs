@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 
 const output = resolve('dist/client');
 const html = readFileSync(resolve(output, 'index.html'), 'utf8');
+const momentsHtml = readFileSync(resolve(output, 'moments/index.html'), 'utf8');
 const { publications } = JSON.parse(
   readFileSync('content/publications.json', 'utf8'),
 );
@@ -32,6 +33,8 @@ for (const paper of publications) {
   );
 }
 for (const path of [
+  'moments/index.html',
+  'moments.rsc',
   '404.html',
   'favicon.svg',
   'artwork/climbing-poses.png',
@@ -47,12 +50,37 @@ for (const path of [
   );
 }
 assert(
-  html.includes('Moments') && html.includes('Footprints'),
+  html.includes('href="/moments/"'),
+  'The personal page is not linked from the homepage.',
+);
+assert(
+  !html.includes('class="photo-grid"') &&
+    !html.includes('class="footprints-map"'),
+  'Personal sections remain on the homepage.',
+);
+assert(
+  momentsHtml.includes('Moments') && momentsHtml.includes('Footprints'),
   'Missing personal sections.',
+);
+assert(
+  momentsHtml.includes('https://eugeneliu2000.github.io/moments/'),
+  'Personal page canonical URL is missing.',
+);
+assert(
+  !momentsHtml.includes('China (including Taiwan)'),
+  'The old map label remains.',
+);
+assert(
+  html.indexOf('id="paper-') < html.indexOf('id="publication-wall"'),
+  'The publication list must precede the wall.',
+);
+assert(
+  /aria-expanded="true"[^>]*>[\s\S]*?All/.test(html),
+  'The publication list is not expanded by default.',
 );
 let previousPhotoPosition = -1;
 for (const photo of [...photos].sort((a, b) => a.date.localeCompare(b.date))) {
-  const position = html.indexOf(`src="${photo.src}"`);
+  const position = momentsHtml.indexOf(`src="${photo.src}"`);
   assert(
     position > previousPhotoPosition,
     `Missing or out-of-order photo: ${photo.src}`,
@@ -69,12 +97,14 @@ for (const code of places.flatMap((place) => place.codes)) {
     `Missing country geometry: ${code}`,
   );
   assert(
-    html.includes(`data-country="${code}" data-visited="true"`),
+    momentsHtml.includes(`data-country="${code}" data-visited="true"`),
     `Country was not highlighted: ${code}`,
   );
 }
 const assetPaths = [
-  ...html.matchAll(/(?:src|href)="(\/_next\/[^"?#]+)(?:[?#][^"]*)?"/g),
+  ...(html + momentsHtml).matchAll(
+    /(?:src|href)="(\/_next\/[^"?#]+)(?:[?#][^"]*)?"/g,
+  ),
 ].map((match) => match[1]);
 assert(assetPaths.length > 0, 'No client assets were found.');
 for (const path of assetPaths)

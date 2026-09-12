@@ -1,12 +1,11 @@
-import { ArrowUpRight, Mail } from 'lucide-react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import { BoulderingResearch } from '@/components/bouldering-research';
 import { PublicationList } from '@/components/publication-list';
-import { PhotoJournal, type JournalPhoto } from '@/components/photo-journal';
-import { Footprints } from '@/components/footprints';
+import { SiteHeader, SiteFooter } from '@/components/site-chrome';
+import { LegacyPersonalLinks } from '@/components/legacy-personal-links';
 import publicationData from '@/content/publications.json';
 import updates from '@/content/updates.json';
-import photos from '@/content/photos.json';
 
 const scholar = 'https://scholar.google.com/citations?user=kPzCqSAAAAAJ&hl=en';
 const publications = [...publicationData.publications].sort((a, b) =>
@@ -29,21 +28,8 @@ export default function Home() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="site-header">
-        <nav aria-label="Main navigation">
-          <a href="#about">About</a>
-          <a href="#research">Publications</a>
-          <a href="#journey">CV</a>
-          <a href="#life">Moments</a>
-          <a href="#footprints">Footprints</a>
-        </nav>
-        <a
-          className="header-contact"
-          href="mailto:yingjian@lorentz.leidenuniv.nl"
-        >
-          Email <ArrowUpRight size={16} />
-        </a>
-      </header>
+      <SiteHeader />
+      <LegacyPersonalLinks />
       <main id="main">
         <section
           className="intro academic-intro section-width"
@@ -111,11 +97,15 @@ export default function Home() {
           id="research"
           aria-labelledby="research-title"
         >
-          <SectionHeading
-            title="Publications and preprints"
-            id="research-title"
-          />
-          <BoulderingResearch />
+          <div className="research-heading">
+            <SectionHeading
+              title="Publications and preprints"
+              id="research-title"
+            />
+            <a className="wall-jump text-link" href="#publication-wall">
+              Explore the wall <ArrowDown size={15} />
+            </a>
+          </div>
           <PublicationList count={publications.length}>
             <ol className="publication-list">
               {publications.map((paper, index) => (
@@ -192,6 +182,7 @@ export default function Home() {
               ))}
             </ol>
           </PublicationList>
+          <BoulderingResearch />
         </section>
         <section
           className="updates section-width"
@@ -275,38 +266,8 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section
-          className="life section-width"
-          id="life"
-          aria-labelledby="life-title"
-        >
-          <SectionHeading title="Moments" id="life-title" />
-          <PhotoJournal photos={photos as JournalPhoto[]} />
-        </section>
-        <section
-          className="footprints section-width"
-          id="footprints"
-          aria-labelledby="footprints-title"
-        >
-          <SectionHeading title="Footprints" id="footprints-title" />
-          <Footprints />
-        </section>
       </main>
-      <footer className="site-footer section-width">
-        <div>
-          <a className="footer-name" href="#about">
-            Yingjian Liu
-          </a>
-          <p>Theoretical physics · Leiden University</p>
-        </div>
-        <a className="text-link" href="mailto:yingjian@lorentz.leidenuniv.nl">
-          <Mail size={17} /> Email <ArrowUpRight size={16} />
-        </a>
-        <div className="copyright">
-          <p>© 2026 Yingjian Liu</p>
-          <p>Last updated September 2026</p>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

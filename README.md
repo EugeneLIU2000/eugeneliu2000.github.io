@@ -12,8 +12,8 @@ Source: https://github.com/EugeneLIU2000/eugeneliu2000.github.io
 - **论文列表**：编辑 `content/publications.json` 中的 `publications`。保留准确作者顺序、论文标题、arXiv 编号和 DOI。没有正式发表的论文不要填写 `venue` 或 `publicationDate`。文字列表按正式发表日期或首次上传日期排序。攀岩路线按首次上传 arXiv 的时间从下向上排列；岩点对应关系和位置在 `components/bouldering-research.tsx` 的 `route` 中维护。原始核实来源记录在 `sources`。
 - **个人介绍、经历和教学**：编辑 `app/page.tsx`。
 - **主页照片**：`public/photos/yingjian-liu.jpg` 使用本人提供的原图，以 4:3 比例展示；桌面位于介绍区右侧，手机位于姓名与简介之间。
-- **Moments 相册**：照片位于 `public/photos/moments/`，记录在 `content/photos.json`。按年份从早到晚排列，同一年保留提供顺序。缩略图统一为 4:3，`objectPosition` 可调整取景；点击后显示完整照片，Esc 关闭。`width` 和 `height` 为照片实际像素尺寸。主页照片和日常相册分别维护。
-- **Footprints**：编辑 `content/footprints.json` 的地点和国家代码。当前按本人提供名单标记十二个国家，中国记录同时高亮大陆和台湾。地图使用 Natural Earth 的公开领域数据，几何保存在 `content/world-map.json`，不依赖外部地图服务。原始数据来源及转换方法见 `scripts/prepare-world-map.py`。
+- **Moments 相册**：独立页面 `/moments/` 包含相册和 Footprints，入口在主页导航。照片位于 `public/photos/moments/`，记录在 `content/photos.json`。按年份从早到晚排列，同一年保留提供顺序。缩略图统一为 4:3，`objectPosition` 可调整取景；点击后显示完整照片，Esc 关闭。`width` 和 `height` 为照片实际像素尺寸。主页照片和日常相册分别维护。旧的 `/#life`、`/#footprints` 链接自动跳转到新页面。
+- **Footprints**：编辑 `content/footprints.json` 的地点和国家代码。地图下方的中国标签为 China，高亮范围保留。地图使用 Natural Earth 的公开领域数据，几何保存在 `content/world-map.json`，不依赖外部地图服务。原始数据来源及转换方法见 `scripts/prepare-world-map.py`。
 
 相册记录示例（仅文档示例，不会显示在网站上）：
 
@@ -62,6 +62,8 @@ npm start
 
 `npm run lint` checks the authored source; unchanged generated UI primitives and their mobile hook are excluded from lint because the starter ships existing lint findings. `npx tsc --noEmit` checks all TypeScript, including those primitives. The build exports to `dist/client`; no server is needed in production. Credentials are not stored in this repository. The earlier Sites project identity remains in `.openai/hosting.json` for reference.
 
+The build preloads `scripts/prerender-trailing-slash.mjs` to work around Vinext 1.0.0-beta.5 skipping nested routes when `trailingSlash: true`. It follows only same-origin, slash-only redirects on authenticated local prerender requests. It does not run in the website. Remove it once the upstream exporter handles those redirects; verification requires both the Moments HTML and its generated RSC payload. Shared navigation uses native links so both pages work directly on GitHub Pages without a client router.
+
 ## GitHub Pages deployment
 
 Push changes to `main`. `.github/workflows/deploy-pages.yml` installs dependencies, checks source, builds and verifies the static output, and publishes to GitHub Pages. The repository uses **GitHub Actions** as its Pages source. A failed build leaves the previous deployment available.
@@ -83,4 +85,4 @@ A translucent gray-green gradient blends the original wall into the page palette
 
 The Footprints map follows the compact visited-country idea from https://jtura.cat/index.php?page=map. Geographic data: https://www.naturalearthdata.com/about/terms-of-use/ (public domain). The map is rendered locally as SVG; country names appear on hover and the visited places are also listed as text.
 
-Colored holds select real papers. Gray holds provide contact points and space for future papers; they do not claim that additional projects exist. Colored holds have no visible text labels. Hover, tap, or keyboard activation opens a card with publication details and links; Yingjian Liu is bolded in the author list. Escape or the close button dismisses the card. The climber remains fixed at the highest colored hold. The page respects reduced-motion preferences and provides a collapsible text list.
+The complete publication list is expanded by default and appears before the wall. Colored holds select real papers; gray holds provide contact points and space for future papers. Hover previews a paper; clicking keeps that card open so its links can be used. Click the same hold again, click outside, use Escape, or use the close button to dismiss it. Yingjian Liu is bolded in the author list. The climber remains fixed at the highest colored hold. The wall background fades at its edges without masking the holds or clipping popovers, and the page respects reduced-motion preferences.

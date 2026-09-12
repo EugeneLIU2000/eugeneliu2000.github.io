@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build",
+    "build": "node --import ./scripts/prerender-trailing-slash.mjs ./node_modules/vinext/dist/cli.js build",
     "start": "vite preview --outDir dist/client",
     "lint": "oxlint",
     "format": "oxfmt"
