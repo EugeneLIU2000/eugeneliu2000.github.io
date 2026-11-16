@@ -37,7 +37,7 @@ for (const path of [
   'moments.rsc',
   '404.html',
   'favicon.svg',
-  'artwork/climbing-poses.png',
+  'artwork/climber-standing.png',
   'artwork/quantum-holds.png',
   'photos/yingjian-liu.jpg',
   ...photos.map((photo) => photo.src.slice(1)),

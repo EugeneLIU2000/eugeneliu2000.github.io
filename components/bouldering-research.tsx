@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/popover';
 import publicationData from '@/content/publications.json';
 import { ClimbingRoom, spritePosition } from '@/components/climbing-room';
+import { CLIMBER_X, climberLean } from '@/lib/climbing-scene';
 
 // Oldest preprints start at the bottom; later work extends the route upward.
 const route = [
@@ -104,6 +105,7 @@ export function BoulderingResearch() {
   const [pinnedId, setPinnedId] = useState<string | null>(null);
   const pinnedIdRef = useRef<string | null>(null);
   const keyboardPinRef = useRef<string | null>(null);
+  const openHold = route.find((hold) => hold.id === openId);
   const [handles] = useState(() =>
     Object.fromEntries(
       route.map((hold) => [hold.id, PopoverPrimitive.createHandle()]),
@@ -144,6 +146,16 @@ export function BoulderingResearch() {
             }
           />
         ))}
+        <span
+          className="room-climber"
+          aria-hidden="true"
+          style={
+            {
+              '--climber-x': CLIMBER_X,
+              '--lean': `${climberLean(openHold?.x ?? null)}deg`,
+            } as CSSProperties
+          }
+        />
         {route.map((hold) => (
           <Popover
             key={hold.id}
