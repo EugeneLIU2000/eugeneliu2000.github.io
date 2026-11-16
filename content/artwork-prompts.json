@@ -12,5 +12,5 @@
   "final_assets": {
     "holds": "public/artwork/quantum-holds.png"
   },
-  "note": "The single-pose character and the later four-pose climbing sprite were both superseded by the standing climber documented in climber-standing-prompt.json."
+  "note": "The initial single-pose character was superseded by the four-pose sprite documented in climbing-poses-prompts.json."
 }

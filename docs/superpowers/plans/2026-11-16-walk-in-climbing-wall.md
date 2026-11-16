@@ -24,24 +24,24 @@
 
 Light wall palette (CSS custom properties on the room):
 
-| token | value |
-|---|---|
-| back wall | `linear-gradient(172deg, #f5f6f7, #e8ebee)` |
-| overhang | `linear-gradient(0deg, #dfe3e8, #d3d9df)` |
-| left wall | `linear-gradient(90deg, #d2d8de, #dce1e6)` |
-| right wall | `linear-gradient(90deg, #ebe8e3, #f2f0ec)` |
-| floor | `linear-gradient(#d3d9df, #c4ccd3)` + white seams `rgba(255,255,255,.22)` every 225 px and `.16` every 180 px |
-| bolt dots | `radial-gradient(circle, rgba(40,50,62,.13) 1.3px, transparent 1.8px)` on a 41 px grid |
-| panel seams | `rgba(40,50,62,.05)` 1 px every 225 px (back wall) |
-| hold shadow | `drop-shadow(4px 7px 5px rgba(25,35,45,.24))`; hover/open: `drop-shadow(6px 11px 7px …)` and `scale(1.1)` |
-| fades to `var(--background)` | top 26 %, bottom 14 %, left/right 7 % |
+| token                        | value                                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| back wall                    | `linear-gradient(172deg, #f5f6f7, #e8ebee)`                                                                   |
+| overhang                     | `linear-gradient(0deg, #dfe3e8, #d3d9df)`                                                                     |
+| left wall                    | `linear-gradient(90deg, #d2d8de, #dce1e6)`                                                                    |
+| right wall                   | `linear-gradient(90deg, #ebe8e3, #f2f0ec)`                                                                    |
+| floor                        | `linear-gradient(#d3d9df, #c4ccd3)` + white seams `rgba(255,255,255,.22)` every 225 px and `.16` every 180 px |
+| bolt dots                    | `radial-gradient(circle, rgba(40,50,62,.13) 1.3px, transparent 1.8px)` on a 41 px grid                        |
+| panel seams                  | `rgba(40,50,62,.05)` 1 px every 225 px (back wall)                                                            |
+| hold shadow                  | `drop-shadow(4px 7px 5px rgba(25,35,45,.24))`; hover/open: `drop-shadow(6px 11px 7px …)` and `scale(1.1)`     |
+| fades to `var(--background)` | top 26 %, bottom 14 %, left/right 7 %                                                                         |
 
 Room geometry (logical px; the stage is scaled to the viewport width):
 
-| | stage | perspective | back wall (w×h, z) | overhang | side walls (depth×h) | floor (w×depth) | paper hold |
-|---|---|---|---|---|---|---|---|
-| ≥ 651 px | 960×600 | 900 | 900×600, z −200 | 900×560, `rotateX(-28deg)` hinged on back-wall top | 900×1400 | 900×900 | 48 |
-| ≤ 650 px | 480×720 | 760 | 440×600, z −120 | 440×420 | 600×1400 | 440×600 | 60 (≥ 44 px on a 375 px phone) |
+|          | stage   | perspective | back wall (w×h, z) | overhang                                           | side walls (depth×h) | floor (w×depth) | paper hold                     |
+| -------- | ------- | ----------- | ------------------ | -------------------------------------------------- | -------------------- | --------------- | ------------------------------ |
+| ≥ 651 px | 960×600 | 900         | 900×600, z −200    | 900×560, `rotateX(-28deg)` hinged on back-wall top | 900×1400             | 900×900         | 48                             |
+| ≤ 650 px | 480×720 | 760         | 440×600, z −120    | 440×420                                            | 600×1400             | 440×600         | 60 (≥ 44 px on a 375 px phone) |
 
 Plane transforms follow `walk-in-wall-v2.html`: left wall `translate3d(-w/2, …, +near) rotateY(90deg)`, right wall `translate3d(+w/2, …, -depth) rotateY(-90deg)`, floor `rotateX(90deg)` from the back-wall bottom edge — so every plane's front face points into the room.
 
@@ -58,11 +58,13 @@ Plane transforms follow `walk-in-wall-v2.html`: left wall `translate3d(-w/2, …
 ### Task 1: Scene maths module
 
 **Files:**
+
 - Create: `lib/climbing-scene.ts`
 - Test: `lib/climbing-scene.test.mjs`
 - Modify: `package.json` (add `"test"` script), `.github/workflows/deploy-pages.yml` (run tests after lint)
 
 **Interfaces:**
+
 - Produces:
   - `type Camera = { x: number; y: number }` (normalised, −0.5…0.5)
   - `type CameraMode = 'static' | 'paused' | 'live'`
@@ -77,13 +79,21 @@ Plane transforms follow `walk-in-wall-v2.html`: left wall `translate3d(-w/2, …
 
 ```js
 test('cameraMode', () => {
-  const base = { reducedMotion: false, finePointer: true, inView: true, popoverOpen: false };
+  const base = {
+    reducedMotion: false,
+    finePointer: true,
+    inView: true,
+    popoverOpen: false,
+  };
   assert.equal(cameraMode(base), 'live');
   assert.equal(cameraMode({ ...base, reducedMotion: true }), 'static');
   assert.equal(cameraMode({ ...base, finePointer: false }), 'static');
   assert.equal(cameraMode({ ...base, popoverOpen: true }), 'paused');
   assert.equal(cameraMode({ ...base, inView: false }), 'paused');
-  assert.equal(cameraMode({ ...base, reducedMotion: true, popoverOpen: true }), 'static');
+  assert.equal(
+    cameraMode({ ...base, reducedMotion: true, popoverOpen: true }),
+    'static',
+  );
 });
 test('idleTarget', () => {
   assert.deepEqual(idleTarget(0), { x: 0, y: 0.1 });
@@ -93,7 +103,8 @@ test('idleTarget', () => {
   }
 });
 test('stepCamera eases with a 750 ms time constant', () => {
-  const from = { x: 0, y: 0 }, to = { x: 0.4, y: -0.2 };
+  const from = { x: 0, y: 0 },
+    to = { x: 0.4, y: -0.2 };
   assert.deepEqual(stepCamera(from, to, 0), from);
   const one = stepCamera(from, to, 750);
   assert.ok(Math.abs(one.x - 0.4 * (1 - Math.exp(-1))) < 1e-9);
@@ -101,8 +112,14 @@ test('stepCamera eases with a 750 ms time constant', () => {
   assert.ok(Math.abs(far.x - 0.4) < 1e-9 && Math.abs(far.y + 0.2) < 1e-9);
 });
 test('cameraStyle', () => {
-  assert.deepEqual(cameraStyle({ x: 0, y: 0 }), { perspectiveOrigin: '50% 50%', transform: 'translate3d(0px, 0px, 0)' });
-  assert.deepEqual(cameraStyle({ x: 0.5, y: -0.5 }), { perspectiveOrigin: '67% 38%', transform: 'translate3d(-9px, 6px, 0)' });
+  assert.deepEqual(cameraStyle({ x: 0, y: 0 }), {
+    perspectiveOrigin: '50% 50%',
+    transform: 'translate3d(0px, 0px, 0)',
+  });
+  assert.deepEqual(cameraStyle({ x: 0.5, y: -0.5 }), {
+    perspectiveOrigin: '67% 38%',
+    transform: 'translate3d(-9px, 6px, 0)',
+  });
 });
 test('climberLean is gentle and capped at 3 degrees', () => {
   assert.equal(climberLean(null), 0);
@@ -129,6 +146,7 @@ Run: `npm test` — Expected: FAIL, cannot find module `./climbing-scene.ts`.
 ### Task 2: The 3D room, wired into the publication wall
 
 **Files:**
+
 - Create: `components/climbing-room.tsx`
 - Modify: `components/bouldering-research.tsx` (render into the room; drop `supports`, `grip`, `highestHold`, the sprite climber; keep `route`, `futureHolds`, popover logic)
 - Modify: `app/globals.css` (remove `.wall-surface::before`, `.climbing-canvas`, `.future-hold`, `.support-hold`, `.route-climber*` rules and their media-query copies, and `--wall-wash-*` in `:root`/`.dark`; add a `/* Walk-in climbing room. */` section)
@@ -136,6 +154,7 @@ Run: `npm test` — Expected: FAIL, cannot find module `./climbing-scene.ts`.
 - Delete: `public/artwork/climbing-wall.png`, `content/climbing-wall-prompt.txt`
 
 **Interfaces:**
+
 - Consumes: `cameraMode`, `idleTarget`, `stepCamera`, `cameraStyle` from Task 1.
 - Produces: `ClimbingRoom({ paused, children }: { paused: boolean; children: React.ReactNode }): React.JSX.Element`. `children` are absolutely positioned inside the back-wall plane (`.room-back`, `position: relative`, `transform-style: preserve-3d`); place them with `left`/`top` percentages. The outer element keeps class `wall-surface` (full-bleed `width: min(1440px, calc(100vw - 48px))`, centred as today).
 
@@ -156,11 +175,13 @@ Run: `npm test` — Expected: FAIL, cannot find module `./climbing-scene.ts`.
 ### Task 3: Standing climber
 
 **Files:**
+
 - Create: `public/artwork/climber-standing.png` (placeholder until the user's generated image replaces it), `content/climber-standing-prompt.json`
 - Modify: `components/bouldering-research.tsx`, `app/globals.css`, `scripts/verify-static.mjs`, `README.md` (Illustration assets section and the wall paragraphs), `content/artwork-prompts.json` (`note` points to `climber-standing-prompt.json`)
 - Delete: `public/artwork/climbing-poses.png`, `content/climbing-poses-prompts.json`
 
 **Interfaces:**
+
 - Consumes: `CLIMBER_X`, `climberLean` from Task 1; `ClimbingRoom` children slot from Task 2.
 
 - [ ] **Step 1: Placeholder image** — draw a back-view standing figure in the site palette (teal cap `#127d7a`, navy shirt `#2e3a8c`, orange trousers `#f0691d`, skin `#f2c27e`, shoes `#24315f`, ink `#171717` outlines) as an SVG in the scratchpad, render with `rsvg-convert -w 512 -h 1024` to `public/artwork/climber-standing.png`, transparent, feet 6 % above the bottom edge.

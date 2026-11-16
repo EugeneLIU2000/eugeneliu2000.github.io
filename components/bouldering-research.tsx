@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/popover';
 import publicationData from '@/content/publications.json';
 import { ClimbingRoom, spritePosition } from '@/components/climbing-room';
-import { CLIMBER_X, climberLean } from '@/lib/climbing-scene';
 
 // Oldest preprints start at the bottom; later work extends the route upward.
 const route = [
@@ -100,12 +99,20 @@ const futureHolds = [
   [66, 91, 3, 18],
 ];
 
+// The climber starts at the foot of the wall (third frame of
+// climbing-poses.png). Grey holds sit under both hands and the raised foot,
+// as fractions of the climber's frame: [x, y, sprite].
+const climberContacts = [
+  [0.255, 0.3, 4],
+  [0.715, 0.305, 5],
+  [0.75, 0.665, 6],
+];
+
 export function BoulderingResearch() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [pinnedId, setPinnedId] = useState<string | null>(null);
   const pinnedIdRef = useRef<string | null>(null);
   const keyboardPinRef = useRef<string | null>(null);
-  const openHold = route.find((hold) => hold.id === openId);
   const [handles] = useState(() =>
     Object.fromEntries(
       route.map((hold) => [hold.id, PopoverPrimitive.createHandle()]),
@@ -146,16 +153,21 @@ export function BoulderingResearch() {
             }
           />
         ))}
-        <span
-          className="room-climber"
-          aria-hidden="true"
-          style={
-            {
-              '--climber-x': CLIMBER_X,
-              '--lean': `${climberLean(openHold?.x ?? null)}deg`,
-            } as CSSProperties
-          }
-        />
+        <span className="room-climber" aria-hidden="true" />
+        {climberContacts.map(([x, y, sprite], index) => (
+          <span
+            key={index}
+            className="room-hold room-support rock-sprite"
+            aria-hidden="true"
+            style={
+              {
+                '--fx': x,
+                '--fy': y,
+                backgroundPosition: spritePosition(sprite),
+              } as CSSProperties
+            }
+          />
+        ))}
         {route.map((hold) => (
           <Popover
             key={hold.id}
