@@ -28,24 +28,20 @@
   --radius-xl: 12px;
 }
 :root {
-  --background: #f1f4f0;
-  --page-mid: #e7eeea;
-  --page-end: #edf1e9;
+  --background: #fff;
   --wall-wash-start: #eef2eac9;
   --wall-wash-end: #dce8e0c2;
-  --foreground: #223039;
-  --primary: #315f58;
+  --foreground: #1b272f;
+  --primary: #2d5a53;
   --primary-foreground: #fff;
   --muted: #e4ebe5;
-  --muted-foreground: #596871;
-  --card: #f8faf5;
+  --muted-foreground: #46535c;
+  --card: #fff;
   --border: #d1ddd5;
   --serif: Georgia, 'Times New Roman', serif;
 }
 .dark {
   --background: #192727;
-  --page-mid: #24342f;
-  --page-end: #1c2c29;
   --wall-wash-start: #243530c9;
   --wall-wash-end: #33453ed4;
   --foreground: #f2f4ee;
@@ -65,18 +61,11 @@ html {
 }
 body {
   margin: 0;
-  background: linear-gradient(
-    180deg,
-    var(--background),
-    var(--page-mid) 35%,
-    var(--background) 72%,
-    var(--page-end)
-  );
+  background: var(--background);
   color: var(--foreground);
   font-family: Arial, 'Helvetica Neue', sans-serif;
   font-size: 16px;
   line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
 }
 ::selection {
   background: #e8c8b8;
@@ -1900,32 +1889,32 @@ body {
 }
 @media (min-width: 901px) {
   body {
-    font-size: 1.125rem;
+    font-size: 1.1875rem;
   }
   .section-width,
   .site-header {
     width: min(1160px, calc(100% - 96px));
   }
   .site-header nav {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     gap: 32px;
   }
   .header-contact,
   .text-link {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
   .academic-intro h1 {
     font-size: 4rem;
   }
   .intro-role {
-    font-size: 1.1875rem;
+    font-size: 1.25rem;
   }
   .academic-intro .bio {
-    font-size: 1.25rem;
+    font-size: 1.3125rem;
     line-height: 1.75;
   }
   .academic-intro .personal-note {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
   .section-heading h2 {
     font-size: 2.25rem;
@@ -1941,85 +1930,90 @@ body {
   }
   .climb-toolbar > p,
   .publication-list-toggle {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
   .future-note {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
   .publication h3 {
-    font-size: 1.75rem;
+    font-size: 1.8125rem;
   }
   .publication .authors,
   .publication .paper-summary {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
   .publication-meta,
   .paper-links a,
   .publication-year {
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
   .latest-label,
   .publication-year > span {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
   .paper-preview[data-slot='popover-content'] {
-    width: 410px;
+    width: 430px;
     padding: 24px;
   }
   .paper-preview-title {
     font-size: 1.625rem;
   }
-  .paper-preview .authors {
-    font-size: 1rem;
+  .paper-preview .authors,
+  .paper-preview .paper-summary {
+    font-size: 1.0625rem;
   }
   .paper-preview-venue,
   .paper-preview .paper-links a {
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
   .paper-preview-topline > p {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
   .news-row {
     grid-template-columns: 112px minmax(0, 1fr);
   }
   .news-row p {
-    font-size: 1.125rem;
+    font-size: 1.1875rem;
   }
   .news-row time,
   .news-kind {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
   .cv-entry h4,
   .teaching-entry h4 {
-    font-size: 1.25rem;
+    font-size: 1.3125rem;
   }
   .cv-entry p:not(.cv-date),
   .teaching-entry p:not(.cv-date) {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
   .cv-date {
-    font-size: 0.875rem !important;
+    font-size: 0.9375rem !important;
   }
   .subsection-title {
     font-size: 1.625rem;
   }
   .journal-photo figcaption {
-    font-size: 1.0625rem;
-  }
-  .journal-photo small {
-    font-size: 0.875rem;
-  }
-  .footprints-intro {
     font-size: 1.125rem;
   }
-  .visited-places {
-    font-size: 1rem;
+  .journal-photo small {
+    font-size: 0.9375rem;
+  }
+  .footprints-intro {
+    font-size: 1.1875rem;
+  }
+  .visited-places,
+  .map-legend {
+    font-size: 1.0625rem;
+  }
+  .map-credit {
+    font-size: 0.875rem;
   }
   .footer-name {
     font-size: 1.5rem;
   }
   .site-footer p {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
 }
 @media (min-width: 651px) and (max-width: 900px) {
@@ -2068,5 +2062,73 @@ body {
   }
   .publication-featured {
     grid-template-columns: 65px 1fr;
+  }
+}
+/* Readability: slightly heavier body text and larger small text on narrow screens. */
+body {
+  font-weight: 450;
+}
+@media (max-width: 900px) {
+  body {
+    font-size: 17px;
+  }
+  .site-header nav,
+  .header-contact,
+  .text-link,
+  .academic-intro .personal-note,
+  .climb-toolbar > p,
+  .publication-list-toggle,
+  .publication .authors,
+  .paper-preview .authors,
+  .paper-preview .paper-summary,
+  .map-legend,
+  .visited-places {
+    font-size: 15px;
+  }
+  .intro-role,
+  .publication .paper-summary,
+  .cv-entry p:not(.cv-date),
+  .teaching-entry p:not(.cv-date),
+  .journal-photo figcaption {
+    font-size: 16px;
+  }
+  .academic-intro .bio,
+  .news-row p,
+  .cv-entry h4,
+  .teaching-entry h4,
+  .footprints-intro {
+    font-size: 17px;
+  }
+  .publication-meta,
+  .publication-year,
+  .paper-links a,
+  .paper-preview-venue {
+    font-size: 14px;
+  }
+  .latest-label,
+  .future-note,
+  .news-row time,
+  .news-kind,
+  .journal-photo small,
+  .paper-preview-topline > p,
+  .map-credit,
+  .site-footer p {
+    font-size: 13px;
+  }
+  .cv-date {
+    font-size: 13px !important;
+  }
+}
+@media (max-width: 650px) {
+  .site-header nav {
+    font-size: 14px;
+  }
+  .publication-year {
+    font-size: 13px;
+  }
+}
+@media (max-width: 360px) {
+  .site-header nav {
+    font-size: 13px;
   }
 }
