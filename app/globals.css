@@ -1060,8 +1060,9 @@ h1 {
 }
 .paper-hold {
   position: absolute;
-  width: max(44px, calc(var(--hold) * var(--u)));
-  height: max(44px, calc(var(--hold) * var(--u)));
+  /* 54px before the 3D projection keeps the on-screen tap target at 44px+. */
+  width: max(54px, calc(var(--hold) * var(--u)));
+  height: max(54px, calc(var(--hold) * var(--u)));
   transform: translate(-50%, -50%) translateZ(calc(12 * var(--u)))
     scale(var(--hold-scale, 1));
   padding: 3px;
@@ -2189,7 +2190,7 @@ body {
   pointer-events: none;
   background:
     linear-gradient(var(--background) 1.5%, transparent 26%),
-    linear-gradient(transparent 86%, var(--background) 98.5%),
+    linear-gradient(transparent 93.5%, var(--background) 99.5%),
     linear-gradient(
       90deg,
       var(--background) 0.5%,
