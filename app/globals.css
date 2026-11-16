@@ -29,8 +29,6 @@
 }
 :root {
   --background: #fff;
-  --wall-wash-start: #eef2eac9;
-  --wall-wash-end: #dce8e0c2;
   --foreground: #1b272f;
   --primary: #2d5a53;
   --primary-foreground: #fff;
@@ -42,8 +40,6 @@
 }
 .dark {
   --background: #192727;
-  --wall-wash-start: #243530c9;
-  --wall-wash-end: #33453ed4;
   --foreground: #f2f4ee;
   --primary: #99cbd5;
   --primary-foreground: #192727;
@@ -1055,38 +1051,6 @@ h1 {
   background: #b8c0c5;
   border-radius: 50%;
 }
-.wall-surface {
-  position: relative;
-  width: min(1440px, calc(100vw - 48px));
-  left: 50%;
-  transform: translateX(-50%);
-  border: 0;
-}
-.wall-surface::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-color: var(--muted);
-  background-image:
-    linear-gradient(145deg, var(--wall-wash-start), var(--wall-wash-end)),
-    url('/artwork/climbing-wall.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  mask-image:
-    linear-gradient(to right, transparent, #000 5%, #000 95%, transparent),
-    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
-  mask-composite: intersect;
-}
-.climbing-canvas {
-  --climber-size: 125px;
-  position: relative;
-  width: 100%;
-  max-width: none;
-  height: clamp(950px, 78vw, 1120px);
-  margin-inline: auto;
-  isolation: isolate;
-}
 .rock-sprite {
   background-image: url('/artwork/quantum-holds.png');
   background-size: 400% 200%;
@@ -1094,35 +1058,20 @@ h1 {
   display: block;
   aspect-ratio: 1;
 }
-.future-hold {
-  position: absolute;
-  width: 34px;
-  opacity: 0.4;
-  filter: grayscale(1);
-  pointer-events: none;
-  z-index: 0;
-}
-.support-hold {
-  position: absolute;
-  width: 22px;
-  transform: translate(-50%, -50%);
-  filter: grayscale(1);
-  opacity: 0.48;
-  pointer-events: none;
-}
 .paper-hold {
   position: absolute;
-  width: 64px;
-  height: 64px;
-  transform: translate(-50%, -50%);
-  padding: 4px;
+  width: max(44px, calc(var(--hold) * var(--u)));
+  height: max(44px, calc(var(--hold) * var(--u)));
+  transform: translate(-50%, -50%) translateZ(calc(12 * var(--u)))
+    scale(var(--hold-scale, 1));
+  padding: 3px;
   border: 0;
   background: transparent;
   cursor: pointer;
   border-radius: 50%;
   color: var(--foreground);
-  z-index: 2;
   outline-offset: 4px;
+  transition: transform 0.25s;
 }
 .paper-hold::before {
   content: '';
@@ -1139,7 +1088,12 @@ h1 {
 .paper-hold > .rock-sprite {
   position: relative;
   width: 100%;
-  transition: filter 0.18s;
+  filter: drop-shadow(4px 7px 5px var(--hold-shadow));
+  transition: filter 0.25s;
+}
+.paper-hold:hover,
+.paper-hold[data-popup-open] {
+  --hold-scale: 1.1;
 }
 .paper-hold:hover::before,
 .paper-hold[data-popup-open]::before,
@@ -1156,24 +1110,10 @@ h1 {
 }
 .paper-hold:hover > .rock-sprite,
 .paper-hold[data-popup-open] > .rock-sprite {
-  filter: drop-shadow(0 2px 2px #22303918);
+  filter: drop-shadow(6px 11px 7px var(--hold-shadow));
 }
 .paper-hold:focus-visible {
   outline: 2px solid var(--primary);
-}
-.route-climber {
-  position: absolute;
-  width: var(--climber-size);
-  height: calc(var(--climber-size) * 2);
-  transform: translate(-26.5%, -22.1%);
-  pointer-events: none;
-  z-index: 3;
-}
-.route-climber > span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: url('/artwork/climbing-poses.png') 100% 0 / 400% 100% no-repeat;
 }
 .paper-preview[data-slot='popover-content'] {
   display: block;
@@ -1303,32 +1243,8 @@ h1 {
     gap: 7px;
     margin-bottom: 20px;
   }
-  .climbing-canvas {
-    --climber-size: 104px;
-    height: 860px;
-  }
-  .wall-surface {
-    width: calc(100vw - 24px);
-    border-radius: 4px;
-  }
-  .paper-hold {
-    width: 58px;
-    height: 58px;
-  }
-  .future-hold {
-    width: 29px;
-  }
-  .support-hold {
-    width: 19px;
-  }
   .paper-preview[data-slot='popover-content'] {
     padding: 19px;
-  }
-}
-@media (max-width: 380px) {
-  .climbing-canvas {
-    --climber-size: 93px;
-    height: 820px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2130,5 +2046,176 @@ body {
 @media (max-width: 360px) {
   .site-header nav {
     font-size: 13px;
+  }
+}
+/* Walk-in climbing room: a CSS 3D gym corner measured in --u, one logical
+   pixel of a 960x600 stage (480x720 on phones). */
+.wall-surface {
+  --u: calc(min(1440px, 100vw - 48px) / 960);
+  --stage-w: 960;
+  --stage-h: 600;
+  --persp: 900;
+  --wall-w: 900;
+  --wall-h: 600;
+  --depth: 200;
+  --over-h: 560;
+  --side-d: 900;
+  --side-h: 1400;
+  --floor-d: 900;
+  --hold: 64;
+  --spare: 34;
+  --hold-shadow: rgba(25, 35, 45, 0.24);
+  --bolts: radial-gradient(
+      circle,
+      rgba(40, 50, 62, 0.13) 1.3px,
+      transparent 1.8px
+    )
+    0 0 / calc(41 * var(--u)) calc(41 * var(--u));
+  position: relative;
+  left: 50%;
+  width: calc(var(--stage-w) * var(--u));
+  height: calc(var(--stage-h) * var(--u));
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+.room-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  perspective: calc(var(--persp) * var(--u));
+  perspective-origin: 50% 50%;
+}
+.room {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+}
+.room-plane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+}
+.room-back {
+  width: calc(var(--wall-w) * var(--u));
+  height: calc(var(--wall-h) * var(--u));
+  transform: translate3d(
+    calc(var(--wall-w) * var(--u) / -2),
+    calc(var(--wall-h) * var(--u) / -2),
+    calc(var(--depth) * var(--u) * -1)
+  );
+  background:
+    var(--bolts),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 calc(224 * var(--u)),
+      rgba(40, 50, 62, 0.05) calc(224 * var(--u)) calc(225 * var(--u))
+    ),
+    linear-gradient(172deg, #f5f6f7, #e8ebee);
+}
+.room-over {
+  width: calc(var(--wall-w) * var(--u));
+  height: calc(var(--over-h) * var(--u));
+  transform-origin: 50% 100%;
+  transform: translate3d(
+      calc(var(--wall-w) * var(--u) / -2),
+      calc((var(--wall-h) / -2 - var(--over-h)) * var(--u)),
+      calc(var(--depth) * var(--u) * -1)
+    )
+    rotateX(-28deg);
+  background: var(--bolts), linear-gradient(0deg, #dfe3e8, #d3d9df);
+}
+.room-left,
+.room-right {
+  width: calc(var(--side-d) * var(--u));
+  height: calc(var(--side-h) * var(--u));
+}
+.room-left {
+  transform: translate3d(
+      calc(var(--wall-w) * var(--u) / -2),
+      calc((var(--wall-h) / 2 - var(--side-h)) * var(--u)),
+      calc((var(--side-d) - var(--depth)) * var(--u))
+    )
+    rotateY(90deg);
+  background: var(--bolts), linear-gradient(90deg, #d2d8de, #dce1e6);
+}
+.room-right {
+  transform: translate3d(
+      calc(var(--wall-w) * var(--u) / 2),
+      calc((var(--wall-h) / 2 - var(--side-h)) * var(--u)),
+      calc(var(--depth) * var(--u) * -1)
+    )
+    rotateY(-90deg);
+  background: var(--bolts), linear-gradient(90deg, #ebe8e3, #f2f0ec);
+}
+.room-floor {
+  width: calc(var(--wall-w) * var(--u));
+  height: calc(var(--floor-d) * var(--u));
+  transform: translate3d(
+      calc(var(--wall-w) * var(--u) / -2),
+      calc(var(--wall-h) * var(--u) / 2),
+      calc(var(--depth) * var(--u) * -1)
+    )
+    rotateX(90deg);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 calc(222 * var(--u)),
+      rgba(255, 255, 255, 0.22) calc(222 * var(--u)) calc(225 * var(--u))
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 calc(177 * var(--u)),
+      rgba(255, 255, 255, 0.16) calc(177 * var(--u)) calc(180 * var(--u))
+    ),
+    linear-gradient(#d3d9df, #c4ccd3);
+}
+.room-hold {
+  position: absolute;
+  width: calc(var(--spare) * var(--u));
+  transform: translate(-50%, -50%) translateZ(calc(6 * var(--u)))
+    rotate(var(--r, 0deg));
+  opacity: 0.55;
+  filter: grayscale(1) brightness(1.08)
+    drop-shadow(2px 4px 3px var(--hold-shadow));
+  pointer-events: none;
+}
+.room-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--background) 1.5%, transparent 26%),
+    linear-gradient(transparent 86%, var(--background) 98.5%),
+    linear-gradient(
+      90deg,
+      var(--background) 0.5%,
+      transparent 7%,
+      transparent 93%,
+      var(--background) 99.5%
+    );
+}
+@media (max-width: 650px) {
+  .wall-surface {
+    --u: calc((100vw - 24px) / 480);
+    --stage-w: 480;
+    --stage-h: 720;
+    --persp: 760;
+    --wall-w: 440;
+    --wall-h: 600;
+    --depth: 120;
+    --over-h: 420;
+    --side-d: 600;
+    --floor-d: 600;
+    --hold: 72;
+    --spare: 40;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-hold {
+    transition: none;
   }
 }
