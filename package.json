@@ -10,7 +10,8 @@
     "build": "node --import ./scripts/prerender-trailing-slash.mjs ./node_modules/vinext/dist/cli.js build",
     "start": "vite preview --outDir dist/client",
     "lint": "oxlint",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "test": "node --experimental-strip-types --test \"lib/**/*.test.mjs\""
   },
   "dependencies": {
     "react": "19.2.6",

@@ -39,7 +39,6 @@ for (const path of [
   'favicon.svg',
   'artwork/climbing-poses.png',
   'artwork/quantum-holds.png',
-  'artwork/climbing-wall.png',
   'photos/yingjian-liu.jpg',
   ...photos.map((photo) => photo.src.slice(1)),
 ]) {
